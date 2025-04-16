@@ -45,7 +45,7 @@ const scrollToSection = (id) => {
   setTimeout(() => {
     const element = document.getElementById(id);
     if (element) {
-      const headerHeight = 64; // Match Header.vue
+      const headerHeight = 64; 
       const offset = element.offsetTop - headerHeight;
       console.log(
         `HeroSection: Found element with ID: ${id}, scrolling to offset: ${offset}`
