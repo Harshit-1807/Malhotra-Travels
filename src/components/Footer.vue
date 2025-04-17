@@ -1,3 +1,4 @@
+<!-- filepath: c:\Users\Rahul\Repos\Malhotra-Travels\src\components\Footer.vue -->
 <template>
   <footer class="footer">
     <div class="footer__container">
@@ -6,52 +7,22 @@
           <h3 class="footer__heading">Quick Links</h3>
           <ul class="footer__list">
             <li class="footer__list-item">
-              <a
-                href="#home"
-                @click="scrollToSection('home')"
-                class="footer__link"
-                >Home</a
-              >
+              <a href="#home" @click="scrollToSection('home')" class="footer__link">Home</a>
             </li>
             <li class="footer__list-item">
-              <a
-                href="#services"
-                @click="scrollToSection('services')"
-                class="footer__link"
-                >Services</a
-              >
+              <a href="#services" @click="scrollToSection('services')" class="footer__link">Services</a>
             </li>
             <li class="footer__list-item">
-              <a
-                href="#book-now"
-                @click="scrollToSection('book-now')"
-                class="footer__link"
-                >Book Now</a
-              >
+              <a href="#book-now" @click="scrollToSection('book-now')" class="footer__link">Book Now</a>
             </li>
             <li class="footer__list-item">
-              <a
-                href="#affiliate"
-                @click="scrollToSection('affiliate')"
-                class="footer__link"
-                >Affiliate</a
-              >
+              <a href="#affiliate" @click="scrollToSection('affiliate')" class="footer__link">Affiliate</a>
             </li>
             <li class="footer__list-item">
-              <a
-                href="#car-owner"
-                @click="scrollToSection('car-owner')"
-                class="footer__link"
-                >Join as Car Owner</a
-              >
+              <a href="#car-owner" @click="scrollToSection('car-owner')" class="footer__link">Join as Car Owner</a>
             </li>
             <li class="footer__list-item">
-              <a
-                href="#contact"
-                @click="scrollToSection('contact')"
-                class="footer__link"
-                >Contact</a
-              >
+              <a href="#contact" @click="scrollToSection('contact')" class="footer__link">Contact</a>
             </li>
           </ul>
         </div>
@@ -59,9 +30,7 @@
           <h3 class="footer__heading">Legal</h3>
           <ul class="footer__list">
             <li class="footer__list-item"><a href="#" class="footer__link">Privacy Policy</a></li>
-            <li class="footer__list-item">
-              <a href="#" class="footer__link">Terms & Conditions</a>
-            </li>
+            <li class="footer__list-item"><a href="#" class="footer__link">Terms & Conditions</a></li>
           </ul>
         </div>
         <div class="footer__column">
@@ -110,8 +79,8 @@ const scrollToSection = (id) => {
 
 .footer__grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 2.5rem;
+  grid-template-columns: repeat(3, 1fr); /* Ensure all columns have equal width */
+  gap: 2rem; /* Consistent gap between all columns */
   justify-content: space-between;
 }
 
@@ -123,11 +92,11 @@ const scrollToSection = (id) => {
 .footer__heading {
   font-weight: 700;
   margin-bottom: 1rem;
-    font-size: 1rem;
+  font-size: 1rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: #f8f9fa;
-  }
+}
 
 .footer__list {
   display: flex;
@@ -136,11 +105,11 @@ const scrollToSection = (id) => {
   padding-left: 0;
   list-style-type: none;
   margin: 0;
-  }
+}
 
 .footer__list--social {
   gap: 0.75rem;
-  }
+}
 
 .footer__list-item {
   font-size: 0.9375rem;
@@ -154,16 +123,16 @@ const scrollToSection = (id) => {
   display: inline-block;
   padding: 0.25rem 0;
   position: relative;
-  }
+}
 
 .footer__link:hover {
   color: #ffffff;
   transform: translateX(3px);
-  }
+}
 
-  .footer__social-link:hover {
+.footer__social-link:hover {
   transform: translateY(-2px);
-  }
+}
 
 .footer__link:focus {
   outline: 2px solid #4299e1;
@@ -201,8 +170,8 @@ const scrollToSection = (id) => {
   }
 
   .footer__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
+    grid-template-columns: repeat(3, 1fr); /* Ensure all columns are visible and equal width */
+    gap: 2rem; /* Consistent gap between columns */
   }
 
   .footer__heading {
@@ -224,8 +193,8 @@ const scrollToSection = (id) => {
   }
 
   .footer__grid {
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 3rem;
+    grid-template-columns: repeat(3, 1fr); /* Ensure equal width for all columns */
+    gap: 20.5rem; /* Consistent gap for larger screens */
   }
 
   .footer__copyright {

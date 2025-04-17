@@ -1,8 +1,8 @@
 <template>
   <section class="hero">
     <img
-      src="/images/ertiga.jpg"
-      alt="Ertiga Car"
+      src="/images/Ertiga.png"
+      alt="Banner image"
       class="hero__image"
       @error="handleImageError"
     />
@@ -68,8 +68,8 @@ const handleImageError = () => {
 .hero {
   position: relative;
   background-color: #f7f7f7;
-  height: 60vh;
-  min-height: 400px;
+  height: 85vh; /* Increased from 60vh for desktop */
+  min-height: 500px; /* Increased from 385px */
   overflow: hidden;
 }
 
@@ -77,6 +77,7 @@ const handleImageError = () => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .hero__overlay {
@@ -164,7 +165,7 @@ const handleImageError = () => {
 
 @media (max-width: 640px) {
   .hero {
-    height: 80vh;
+    height: 80vh; /* Kept as is for mobile */
   }
 
   .hero__buttons {

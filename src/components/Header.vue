@@ -1,9 +1,8 @@
 <template>
   <header class="header">
-    <div class="header__container">
       <!-- Logo/Title on the left -->
       <div class="header__branding">
-        <div class="header__logo">
+        <div @click="scrollToSection('home')" class="header__logo">
           <!-- <img src="https://via.placeholder.com/40" alt="Logo" class="header__logo-image" /> -->
           <span class="header__logo-text">Malhotra Travels</span>
         </div>
@@ -56,18 +55,10 @@
           </li>
           <li class="header__menu-item">
             <a
-              href="#explore"
-              @click.prevent="scrollToSection('explore')"
-              class="header__menu-link"
-              >Explore</a
-            >
-          </li>
-          <li class="header__menu-item">
-            <a
               href="#about"
               @click.prevent="scrollToSection('about')"
               class="header__menu-link"
-              >About</a
+              >About Us</a
             >
           </li>
           <li class="header__menu-item">
@@ -115,12 +106,11 @@
               href="#contact"
               @click.prevent="scrollToSection('contact')"
               class="header__menu-link"
-              >Contact</a
+              >Contact Us</a
             >
           </li>
         </ul>
       </nav>
-    </div>
   </header>
 </template>
 
@@ -170,27 +160,27 @@ const scrollToSection = (id) => {
 </script>
 
 <style scoped>
+/* Header Styles */
 .header {
   background-color: #1f2937;
   color: white;
   width: 100%;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 50;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.header__container {
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  max-width: 1350px;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
 
+/* Branding (Logo/Title) */
 .header__branding {
   display: flex;
   align-items: center;
@@ -223,6 +213,7 @@ const scrollToSection = (id) => {
   }
 }
 
+/* Toggle Button */
 .header__toggle {
   display: flex;
   align-items: center;
@@ -236,20 +227,21 @@ const scrollToSection = (id) => {
   outline: none;
 }
 
+.header__toggle-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 @media (min-width: 768px) {
   .header__toggle {
     display: none;
   }
 }
 
-.header__toggle-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
+/* Navigation Menu */
 .header__nav {
   position: absolute;
-  top: 4rem;
+  top: 100%; /* Ensures no gap between header and nav */
   right: 0;
   left: 0;
   background-color: #1f2937;
@@ -259,6 +251,7 @@ const scrollToSection = (id) => {
   width: 100%;
   max-height: 80vh;
   overflow-y: auto;
+  transition: all 0.3s ease-in-out;
 }
 
 .header__nav--closed {
@@ -286,6 +279,7 @@ const scrollToSection = (id) => {
   }
 }
 
+/* Menu Items */
 .header__menu {
   display: flex;
   flex-direction: column;
@@ -306,6 +300,10 @@ const scrollToSection = (id) => {
   }
 }
 
+.header__menu-item {
+  list-style: none;
+}
+
 .header__menu-link {
   display: block;
   padding: 0.5rem 0.75rem;
@@ -318,5 +316,29 @@ const scrollToSection = (id) => {
 .header__menu-link:hover {
   color: white;
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Accessibility */
+.header__menu-link:focus {
+  outline: 2px solid #4299e1;
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .header__menu {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header__menu-link {
+    transition: none;
+  }
+
+  .header__menu-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 }
 </style>
