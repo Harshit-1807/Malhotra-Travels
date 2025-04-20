@@ -66,10 +66,10 @@
             <p>Choose us not just for a smooth ride — but to leave the planet a little better.</p>
             <div class="initiative-card__actions">
               <a href="https://wa.me/919876543210?text=I'm%20interested%20in%20the%20tree%20planting%20initiative" class="action-button action-button--whatsapp">
-                <i class="fa-brands fa-whatsapp"></i> Learn More on WhatsApp
+                <i class="fa-brands fa-whatsapp"></i>  WhatsApp Us
               </a>
               <a href="tel:+919876543210" class="action-button action-button--call">
-                <i class="fa-solid fa-phone"></i> Call for Details
+                <i class="fa-solid fa-phone"></i> Call Now
               </a>
             </div>
           </div>
@@ -93,10 +93,10 @@
             <p class="initiative-card__cta">Book now and unwrap your surprise!</p>
             <div class="initiative-card__actions">
               <a href="https://wa.me/919876543210?text=I'm%20interested%20in%20the%20First%20Ride%20Surprise" class="action-button action-button--whatsapp">
-                <i class="fa-brands fa-whatsapp"></i> Book via WhatsApp
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
               </a>
               <a href="tel:+919876543210" class="action-button action-button--call">
-                <i class="fa-solid fa-phone"></i> Call to Book
+                <i class="fa-solid fa-phone"></i> Call Now
               </a>
             </div>
           </div>
