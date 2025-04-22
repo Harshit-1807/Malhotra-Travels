@@ -4,7 +4,8 @@
       <div class="car-owner-section__header">
         <h1 class="car-owner-section__title">Partner with Us</h1>
         <p class="car-owner-section__description">
-          Got an idle car? Partner with us and earn by letting us use your car for bookings. Fill out the form below to get started!
+          Got an idle car? Partner with us and earn by letting us use your car
+          for bookings. Fill out the form below to get started!
         </p>
       </div>
 
@@ -23,7 +24,9 @@
           </div>
 
           <div class="car-owner-form__field">
-            <label for="mobile" class="car-owner-form__label">Mobile Number</label>
+            <label for="mobile" class="car-owner-form__label"
+              >Mobile Number</label
+            >
             <input
               v-model="form.mobile"
               type="tel"
@@ -37,7 +40,9 @@
           </div>
 
           <div class="car-owner-form__field">
-            <label for="carType" class="car-owner-form__label">Car Type & Model</label>
+            <label for="carType" class="car-owner-form__label"
+              >Car Type & Model</label
+            >
             <input
               v-model="form.carType"
               type="text"
@@ -49,7 +54,9 @@
           </div>
 
           <div class="car-owner-form__field">
-            <label for="carNumber" class="car-owner-form__label">Car Number</label>
+            <label for="carNumber" class="car-owner-form__label"
+              >Car Number</label
+            >
             <input
               v-model="form.carNumber"
               type="text"
@@ -73,7 +80,9 @@
           </div>
 
           <div class="car-owner-form__field">
-            <label for="availability" class="car-owner-form__label">Availability</label>
+            <label for="availability" class="car-owner-form__label"
+              >Availability</label
+            >
             <select
               v-model="form.availability"
               id="availability"
@@ -105,17 +114,18 @@
           <span v-if="isSubmitting">Processing...</span>
           <span v-else>Submit Your Car Details</span>
         </button>
-
-        <div v-if="formSubmitted" class="car-owner-form__success">
-          <div class="success__content">
-            <span class="success__icon">🎉</span>
-            <h3 class="success__title">Details Submitted Successfully!</h3>
-            <p class="success__message">
-              Thank you for partnering with us. We'll contact you shortly.
-            </p>
-          </div>
-        </div>
       </form>
+
+      <!-- Success Message -->
+      <div v-if="formSubmitted" class="car-owner-form__success">
+        <div class="success__content">
+          <span class="success__icon">🎉</span>
+          <h3 class="success__title">Details Submitted Successfully!</h3>
+          <p class="success__message">
+            Thank you for partnering with us. We'll contact you shortly.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -168,9 +178,9 @@ const submitCarOwner = async () => {
 
 .car-owner-section__title {
   font-size: 2.5rem;
-  color: #d97706;
+  color: #3498db;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -219,8 +229,8 @@ const submitCarOwner = async () => {
 
 .car-owner-form__input:focus {
   outline: none;
-  border-color: #d97706;
-  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
 .car-owner-form__select {
@@ -241,7 +251,7 @@ const submitCarOwner = async () => {
 
 .benefits__title {
   font-size: 1.2rem;
-  color: #d97706;
+  color: #3498db;
   margin-bottom: 1rem;
 }
 
@@ -259,7 +269,7 @@ const submitCarOwner = async () => {
 .car-owner-form__submit {
   width: 100%;
   padding: 1rem;
-  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -271,7 +281,7 @@ const submitCarOwner = async () => {
 
 .car-owner-form__submit:not(:disabled):hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
 }
 
 .car-owner-form__submit:disabled {
@@ -280,17 +290,21 @@ const submitCarOwner = async () => {
 }
 
 .car-owner-form__success {
-  margin-top: 1.5rem;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
   padding: 1.5rem;
-  background: #d1fae5;
   border-radius: 10px;
-  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.5s ease;
 }
 
 .success__content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
 .success__icon {
@@ -306,6 +320,17 @@ const submitCarOwner = async () => {
 .success__message {
   color: #065f46;
   font-size: 0.95rem;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 768px) {
@@ -327,6 +352,11 @@ const submitCarOwner = async () => {
 
   .benefits__list {
     grid-template-columns: 1fr;
+  }
+
+  .car-owner-form__success {
+    left: 20px;
+    right: 20px;
   }
 }
 </style>
