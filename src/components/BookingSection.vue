@@ -55,8 +55,8 @@
               class="booking-form__input"
               required
               placeholder="Enter your mobile number"
-              pattern="[0-9]*"
-              inputmode="numeric"
+              maxlength="10"
+              @input="filterNumericInput"
             />
           </div>
 
@@ -93,11 +93,11 @@
             <label for="date" class="booking-form__label">Journey Date</label>
             <input
               v-model="form.date"
-              type="datetime-local"
+              type="date"
               id="date"
               class="booking-form__input"
               required
-              :min="new Date().toISOString().slice(0, 16)"
+              :min="new Date().toISOString().slice(0, 10)"
             />
           </div>
 
@@ -110,7 +110,6 @@
               required
             >
               <option value="" disabled>Select journey type</option>
-              <option value="oneway">One Way Trip</option>
               <option value="roundtrip">Round Trip</option>
               <option value="wedding">Wedding/Event</option>
               <option value="tour">Tour Package</option>
@@ -184,7 +183,27 @@ const form = reactive({
 const isSubmitting = ref(false);
 const formSubmitted = ref(false);
 
+const filterNumericInput = (event) => {
+  const input = event.target;
+  input.value = input.value.replace(/\D/g, ""); // Remove all non-numeric characters
+  form.mobile = input.value; // Update the reactive form value
+};
+
+const validateForm = () => {
+  let isValid = true;
+
+  // Validate mobile number
+  if (form.mobile.length !== 10) {
+    isValid = false;
+    document.getElementById("mobile").focus();
+  }
+
+  return isValid;
+};
+
 const submitBooking = async () => {
+  if (!validateForm()) return;
+
   isSubmitting.value = true;
   try {
     await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate API call
