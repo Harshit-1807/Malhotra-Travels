@@ -178,9 +178,9 @@ const submitCarOwner = async () => {
 
 .car-owner-section__title {
   font-size: 2.5rem;
-  color: #3498db;
+  color: #d97706;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -229,8 +229,8 @@ const submitCarOwner = async () => {
 
 .car-owner-form__input:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  border-color: #d97706;
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
 }
 
 .car-owner-form__select {
@@ -251,7 +251,7 @@ const submitCarOwner = async () => {
 
 .benefits__title {
   font-size: 1.2rem;
-  color: #3498db;
+  color: #d97706;
   margin-bottom: 1rem;
 }
 
@@ -269,7 +269,7 @@ const submitCarOwner = async () => {
 .car-owner-form__submit {
   width: 100%;
   padding: 1rem;
-  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -281,7 +281,7 @@ const submitCarOwner = async () => {
 
 .car-owner-form__submit:not(:disabled):hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
 }
 
 .car-owner-form__submit:disabled {
