@@ -30,12 +30,12 @@
             <input
               v-model="form.mobile"
               type="tel"
-              id="mobile"
+              id="car-owner-mobile"
               class="car-owner-form__input"
-              pattern="[0-9]*"
-              inputmode="numeric"
               required
               placeholder="Enter your mobile number"
+              maxlength="10"
+              @input="filterNumericInput"
             />
           </div>
 
@@ -145,7 +145,23 @@ const form = reactive({
 const isSubmitting = ref(false);
 const formSubmitted = ref(false);
 
+const filterNumericInput = (event) => {
+  const input = event.target;
+  input.value = input.value.replace(/\D/g, ""); // Remove all non-numeric characters
+  form.mobile = input.value; // Update the reactive form value
+};
+
+const validateForm = () => {
+  if (form.mobile.length !== 10) {
+    document.getElementById("car-owner-mobile").focus(); // Focus on the mobile number field
+    return false;
+  }
+  return true;
+};
+
 const submitCarOwner = async () => {
+  if (!validateForm()) return; // Validate the form before proceeding
+
   isSubmitting.value = true;
   try {
     await new Promise((resolve) => setTimeout(resolve, 800)); // Simulate API call
