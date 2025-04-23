@@ -1,116 +1,116 @@
 <template>
   <header class="header">
-      <!-- Logo/Title on the left -->
-      <div class="header__branding">
-        <div @click="scrollToSection('home')" class="header__logo">
-          <!-- <img src="https://via.placeholder.com/40" alt="Logo" class="header__logo-image" /> -->
-          <span class="header__logo-text">Malhotra Travels</span>
-        </div>
+    <!-- Logo/Title on the left -->
+    <div class="header__branding">
+      <div @click="scrollToSection('home')" class="header__logo">
+        <!-- <img src="https://via.placeholder.com/40" alt="Logo" class="header__logo-image" /> -->
+        <span class="header__logo-text">Malhotra Travels</span>
       </div>
+    </div>
 
-      <!-- Hamburger/Toggle Button on the right -->
-      <button
-        class="header__toggle"
-        @click="toggleMenu"
-        :aria-label="isOpen ? 'Close menu' : 'Open menu'"
+    <!-- Hamburger/Toggle Button on the right -->
+    <button
+      class="header__toggle"
+      @click="toggleMenu"
+      :aria-label="isOpen ? 'Close menu' : 'Open menu'"
+    >
+      <svg
+        class="header__toggle-icon"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
       >
-        <svg
-          class="header__toggle-icon"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            v-if="!isOpen"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-          <path
-            v-else
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
+        <path
+          v-if="!isOpen"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+        <path
+          v-else
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
 
-      <!-- Navigation Menu -->
-      <nav
-        :class="[
-          'header__nav',
-          isOpen ? 'header__nav--open' : 'header__nav--closed',
-        ]"
-      >
-        <ul class="header__menu">
-          <li class="header__menu-item">
-            <a
-              href="#home"
-              @click.prevent="scrollToSection('home')"
-              class="header__menu-link"
-              >Home</a
-            >
-          </li>
-          <li class="header__menu-item">
-            <a
-              href="#about"
-              @click.prevent="scrollToSection('about')"
-              class="header__menu-link"
-              >About Us</a
-            >
-          </li>
-          <li class="header__menu-item">
-            <a
-              href="#services"
-              @click.prevent="scrollToSection('services')"
-              class="header__menu-link"
-              >Services</a
-            >
-          </li>
-          <li class="header__menu-item">
-            <a
-              href="#book-now"
-              @click.prevent="scrollToSection('book-now')"
-              class="header__menu-link"
-              >Book Now</a
-            >
-          </li>
-          <li class="header__menu-item">
-            <a
-              href="#affiliate"
-              @click.prevent="scrollToSection('affiliate')"
-              class="header__menu-link"
-              >Affiliate</a
-            >
-          </li>
-          <li class="header__menu-item">
-            <a
-              href="#car-owner"
-              @click.prevent="scrollToSection('car-owner')"
-              class="header__menu-link"
-              >Join as Car Owner</a
-            >
-          </li>
-          <li class="header__menu-item">
-            <a
-              href="#testimonials"
-              @click.prevent="scrollToSection('testimonials')"
-              class="header__menu-link"
-              >Testimonials</a
-            >
-          </li>
-          <li class="header__menu-item">
-            <a
-              href="#contact"
-              @click.prevent="scrollToSection('contact')"
-              class="header__menu-link"
-              >Contact Us</a
-            >
-          </li>
-        </ul>
-      </nav>
+    <!-- Navigation Menu -->
+    <nav
+      :class="[
+        'header__nav',
+        isOpen ? 'header__nav--open' : 'header__nav--closed',
+      ]"
+    >
+      <ul class="header__menu">
+        <li class="header__menu-item">
+          <a
+            href="#home"
+            @click.prevent="scrollToSection('home')"
+            class="header__menu-link"
+            >Home</a
+          >
+        </li>
+        <li class="header__menu-item">
+          <a
+            href="#about"
+            @click.prevent="scrollToSection('about')"
+            class="header__menu-link"
+            >About Us</a
+          >
+        </li>
+        <li class="header__menu-item">
+          <a
+            href="#services"
+            @click.prevent="scrollToSection('services')"
+            class="header__menu-link"
+            >Services</a
+          >
+        </li>
+        <li class="header__menu-item">
+          <a
+            href="#book-now"
+            @click.prevent="scrollToSection('book-now')"
+            class="header__menu-link"
+            >Book Now</a
+          >
+        </li>
+        <li class="header__menu-item">
+          <a
+            href="#affiliate"
+            @click.prevent="scrollToSection('affiliate')"
+            class="header__menu-link"
+            >Affiliate</a
+          >
+        </li>
+        <li class="header__menu-item">
+          <a
+            href="#car-owner"
+            @click.prevent="scrollToSection('car-owner')"
+            class="header__menu-link"
+            >Join as Car Owner</a
+          >
+        </li>
+        <li class="header__menu-item">
+          <a
+            href="#testimonials"
+            @click.prevent="scrollToSection('testimonials')"
+            class="header__menu-link"
+            >Testimonials</a
+          >
+        </li>
+        <li class="header__menu-item">
+          <a
+            href="#contact"
+            @click.prevent="scrollToSection('contact')"
+            class="header__menu-link"
+            >Contact Us</a
+          >
+        </li>
+      </ul>
+    </nav>
   </header>
 </template>
 
@@ -123,7 +123,7 @@ const scrollOffset = ref(20); // Additional offset to scroll a bit more down
 
 onMounted(() => {
   // Get the actual header height after the component is mounted
-  const headerElement = document.querySelector('.header');
+  const headerElement = document.querySelector(".header");
   if (headerElement) {
     headerHeight.value = headerElement.offsetHeight;
   }
@@ -144,7 +144,11 @@ const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
       // Use the dynamic header height plus additional offset
-      const offset = element.getBoundingClientRect().top + window.pageYOffset - headerHeight.value - scrollOffset.value;
+      const offset =
+        element.getBoundingClientRect().top +
+        window.pageYOffset -
+        headerHeight.value -
+        scrollOffset.value;
       console.log(
         `Header: Found element with ID: ${id}, scrolling to offset: ${offset}, header height: ${headerHeight.value}, additional offset: ${scrollOffset.value}`
       );
@@ -178,6 +182,12 @@ const scrollToSection = (id) => {
   max-width: 1350px;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+@media (min-width: 1530px) {
+  .header {
+    max-width: 1530px;
+  }
 }
 
 /* Branding (Logo/Title) */
@@ -247,7 +257,8 @@ const scrollToSection = (id) => {
   background-color: #1f2937;
   padding: 1rem;
   border-radius: 0 0 0.375rem 0.375rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   width: 100%;
   max-height: 80vh;
   overflow-y: auto;

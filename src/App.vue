@@ -48,4 +48,10 @@ import Home from './views/Home.vue'
     width: 100vw;
   }
 }
+
+@media screen and (min-width: 1530px) {
+  .app__wrapper {
+    max-width: 1530px;
+  }
+}
 </style>
