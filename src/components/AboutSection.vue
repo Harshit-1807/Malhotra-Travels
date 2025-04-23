@@ -50,7 +50,7 @@
             </p>
             <div class="initiative-card__actions">
               <a
-                href="https://wa.me/919876543210?text=Medical%20Emergency%20Support%20Required"
+                href="https://wa.me/918950899123?text=Medical%20Emergency%20Support%20Required"
                 class="action-button action-button--whatsapp"
               >
                 <svg
@@ -66,7 +66,7 @@
                 WhatsApp Us
               </a>
               <a
-                href="tel:+919876543210"
+                href="tel:+918950899123"
                 class="action-button action-button--call"
               >
                 <svg
@@ -120,7 +120,7 @@
             </p>
             <div class="initiative-card__actions">
               <a
-                href="https://wa.me/919876543210?text=Medical%20Emergency%20Support%20Required"
+                href="https://wa.me/918950899123?text=Medical%20Emergency%20Support%20Required"
                 class="action-button action-button--whatsapp"
               >
                 <svg
@@ -136,7 +136,7 @@
                 WhatsApp Us
               </a>
               <a
-                href="tel:+919876543210"
+                href="tel:+918950899123"
                 class="action-button action-button--call"
               >
                 <svg
@@ -179,7 +179,7 @@
             </p>
             <div class="initiative-card__actions">
               <a
-                href="https://wa.me/919876543210?text=Medical%20Emergency%20Support%20Required"
+                href="https://wa.me/918950899123?text=Medical%20Emergency%20Support%20Required"
                 class="action-button action-button--whatsapp"
               >
                 <svg
@@ -196,7 +196,7 @@
                 WhatsApp Us
               </a>
               <a
-                href="tel:+919876543210"
+                href="tel:+918950899123"
                 class="action-button action-button--call"
               >
                 <svg

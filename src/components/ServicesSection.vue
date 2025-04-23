@@ -39,7 +39,7 @@
           ctaText="Join Now"
           ctaLink="#affiliate"
           iconColor="#F59E0B"
-          :whatsappLink="'https://wa.me/+9170564xxxxx?text=I%20want%20to%20know%20more%20about%20the%20Affiliate%20Program'"
+          :whatsappLink="'https://wa.me/+918950899123?text=I%20want%20to%20know%20more%20about%20the%20Affiliate%20Program'"
         />
         <ServiceCard
           :icon="KeyIcon"
@@ -48,7 +48,7 @@
           ctaText="Submit Details"
           ctaLink="#car-owner"
           iconColor="#3B82F6"
-          :whatsappLink="'https://wa.me/+9170564xxxxx?text=I%20want%20to%20know%20more%20about%20Idle%20Car%20Owner%20Collaboration'"
+          :whatsappLink="'https://wa.me/+918950899123?text=I%20want%20to%20know%20more%20about%20Idle%20Car%20Owner%20Collaboration'"
         />
       </div>
     </div>

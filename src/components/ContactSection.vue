@@ -10,15 +10,15 @@
           </p>
           <p class="contact__info">
             📞 Phone:
-            <a href="tel:+9170564xxxxx" class="contact__link">+91-70564xxxxx</a>
+            <a href="tel:+918950899123" class="contact__link">+91-8950899123</a>
             |
-            <a href="tel:+9170154xxxxx" class="contact__link">+91-70154xxxxx</a>
+            <a href="tel:+917015487899" class="contact__link">+91-7015487899</a>
           </p>
           <p class="contact__info">
             📍 Location: Kalanaur, Rohtak, Haryana
           </p>
           <a
-            href="https://wa.me/+9170564xxxxx"
+            href="https://wa.me/+918950899123"
             target="_blank"
             class="contact__whatsapp-button"
           >
