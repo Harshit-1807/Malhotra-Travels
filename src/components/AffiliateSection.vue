@@ -19,7 +19,7 @@
         </ul>
         <div class="affiliate-note">
           🔐 Takes less than 2 minutes<br />
-          📞 Questions? <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="whatsapp-link">WhatsApp us directly</a>
+          📞 Questions? <a href="https://wa.me/918950899123" target="_blank" class="whatsapp-link">WhatsApp us directly</a>
         </div>
       </div>
 
