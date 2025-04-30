@@ -169,6 +169,7 @@
 
 <script setup>
 import { reactive, ref } from "vue";
+import { saveBooking } from "../firebase/bookingService"; 
 
 const form = reactive({
   name: "",
@@ -185,14 +186,13 @@ const formSubmitted = ref(false);
 
 const filterNumericInput = (event) => {
   const input = event.target;
-  input.value = input.value.replace(/\D/g, ""); // Remove all non-numeric characters
-  form.mobile = input.value; // Update the reactive form value
+  input.value = input.value.replace(/\D/g, ""); 
+  form.mobile = input.value; 
 };
 
 const validateForm = () => {
   let isValid = true;
 
-  // Validate mobile number
   if (form.mobile.length !== 10) {
     isValid = false;
     document.getElementById("mobile").focus();
@@ -206,12 +206,19 @@ const submitBooking = async () => {
 
   isSubmitting.value = true;
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate API call
+    // Save booking data using the service
+    await saveBooking(form);
+
+    // Show success message
     formSubmitted.value = true;
+
+    // Reset form after 5 seconds
     setTimeout(() => {
       formSubmitted.value = false;
       Object.keys(form).forEach((key) => (form[key] = ""));
     }, 5000);
+  } catch (error) {
+    alert("Error saving booking: " + error.message); // Handle errors gracefully
   } finally {
     isSubmitting.value = false;
   }
