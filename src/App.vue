@@ -1,20 +1,30 @@
 <template>
   <div class="app">
     <div class="app__wrapper">
-      <Header />
+      <!-- Show default Header only if not in /admin route -->
+      <Header v-if="!isAdminRoute" />
+
       <main class="app__main">
-        <Home />
+        <router-view />
       </main>
-      <Footer />
+      <Footer v-if="!isAdminRoute" />
     </div>
   </div>
 </template>
 
 <script setup>
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
-import Home from './views/Home.vue'
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
+
+const route = useRoute();
+
+
+const isAdminRoute = computed(() => route.path.startsWith('/admin'));
 </script>
+
 
 <style scoped>
 .app {

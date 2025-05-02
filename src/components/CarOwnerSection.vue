@@ -132,6 +132,7 @@
 
 <script setup>
 import { reactive, ref } from "vue";
+import { saveCarOwner } from "../firebase/carOwnerService"; // Import the service function
 
 const form = reactive({
   name: "",
@@ -147,29 +148,32 @@ const formSubmitted = ref(false);
 
 const filterNumericInput = (event) => {
   const input = event.target;
-  input.value = input.value.replace(/\D/g, ""); // Remove all non-numeric characters
-  form.mobile = input.value; // Update the reactive form value
+  input.value = input.value.replace(/\D/g, ""); 
+  form.mobile = input.value;
 };
 
 const validateForm = () => {
   if (form.mobile.length !== 10) {
-    document.getElementById("car-owner-mobile").focus(); // Focus on the mobile number field
-    return false;
+    document.getElementById("car-owner-mobile").focus();
   }
   return true;
 };
 
 const submitCarOwner = async () => {
-  if (!validateForm()) return; // Validate the form before proceeding
+  if (!validateForm()) return;
 
   isSubmitting.value = true;
   try {
-    await new Promise((resolve) => setTimeout(resolve, 800)); // Simulate API call
-    console.log("Car Owner Submitted:", form);
+    await saveCarOwner(form);
     formSubmitted.value = true;
-    Object.keys(form).forEach((key) => (form[key] = ""));
-    form.availability = "Weekdays";
-    setTimeout(() => (formSubmitted.value = false), 5000); // Hide success message after 5 seconds
+
+    setTimeout(() => {
+      formSubmitted.value = false;
+      Object.keys(form).forEach((key) => (form[key] = ""));
+      form.availability = "Weekdays";
+    }, 5000);
+  } catch (error) {
+    alert("Error saving car owner details: " + error.message);
   } finally {
     isSubmitting.value = false;
   }

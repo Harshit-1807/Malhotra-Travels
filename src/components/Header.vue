@@ -109,6 +109,61 @@
             >Contact Us</a
           >
         </li>
+        <li class="header__menu-item header__menu-login">
+          <button
+            class="header__menu-login-button"
+            @click="toggleLoginDropdown"
+            aria-label="Login options"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="header__menu-login-icon"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5.121 17.804A9 9 0 1118.879 6.196a9 9 0 01-13.758 11.608zM15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </button>
+          <ul
+            v-if="isLoginDropdownOpen"
+            class="header__menu-login-dropdown"
+            @click.stop
+          >
+            <li>
+              <router-link
+                to="/admin-login"
+                class="header__menu-login-link"
+                @click="closeLoginDropdown"
+              >
+                Login as Admin
+              </router-link>
+            </li>
+            <li>
+              <router-link
+                to="/car-owner-login"
+                class="header__menu-login-link"
+                @click="closeLoginDropdown"
+              >
+                Login as Car Owner
+              </router-link>
+            </li>
+            <li>
+              <router-link
+                to="/affiliate-login"
+                class="header__menu-login-link"
+                @click="closeLoginDropdown"
+              >
+                Login as Affiliate
+              </router-link>
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
   </header>
@@ -118,11 +173,11 @@
 import { ref, onMounted } from "vue";
 
 const isOpen = ref(false);
+const isLoginDropdownOpen = ref(false);
 const headerHeight = ref(0);
 const scrollOffset = ref(20); // Additional offset to scroll a bit more down
 
 onMounted(() => {
-  // Get the actual header height after the component is mounted
   const headerElement = document.querySelector(".header");
   if (headerElement) {
     headerHeight.value = headerElement.offsetHeight;
@@ -133,17 +188,17 @@ const toggleMenu = () => {
   isOpen.value = !isOpen.value;
 };
 
+const toggleLoginDropdown = () => {
+  isLoginDropdownOpen.value = !isLoginDropdownOpen.value;
+};
+
 const scrollToSection = (id) => {
   console.log(`Header: Attempting to scroll to section: ${id}`);
-
-  // Close the menu first
   isOpen.value = false;
 
-  // Small delay to ensure DOM updates
   setTimeout(() => {
     const element = document.getElementById(id);
     if (element) {
-      // Use the dynamic header height plus additional offset
       const offset =
         element.getBoundingClientRect().top +
         window.pageYOffset -
@@ -161,6 +216,11 @@ const scrollToSection = (id) => {
     }
   }, 50);
 };
+
+const closeLoginDropdown = () => {
+  isLoginDropdownOpen.value = false;
+};
+
 </script>
 
 <style scoped>
@@ -350,6 +410,59 @@ const scrollToSection = (id) => {
 
   .header__menu-link:hover {
     background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.header__menu-login {
+  position: relative;
+}
+
+.header__menu-login-button {
+  background: none;
+  border: none;
+  color: #d1d5db;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.header__menu-login-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.header__menu-login-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #1f2937;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+  list-style: none;
+  z-index: 100;
+  min-width: 12rem;
+}
+
+.header__menu-login-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #d1d5db;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.header__menu-login-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .header__menu-login-dropdown {
+    min-width: 100%;
+    right: 0;
+    left: 0;
   }
 }
 </style>
