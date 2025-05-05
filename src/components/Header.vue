@@ -3,7 +3,6 @@
     <!-- Logo/Title on the left -->
     <div class="header__branding">
       <div @click="scrollToSection('home')" class="header__logo">
-        <!-- <img src="https://via.placeholder.com/40" alt="Logo" class="header__logo-image" /> -->
         <span class="header__logo-text">Malhotra Travels</span>
       </div>
     </div>
@@ -115,25 +114,24 @@
             @click="toggleLoginDropdown"
             aria-label="Login options"
           >
+            Login
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              viewBox="0 0 320 512"
+              fill="currentColor"
               class="header__menu-login-icon"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5.121 17.804A9 9 0 1118.879 6.196a9 9 0 01-13.758 11.608zM15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                d="M31.3 192h257.3c28.4 0 42.8 34.5 22.6 54.6l-128.6 128c-12.5 12.5-32.8 12.5-45.3 0L8.7 246.6C-11.6 226.5 2.8 192 31.3 192z"
               />
             </svg>
           </button>
+
           <ul
             v-if="isLoginDropdownOpen"
             class="header__menu-login-dropdown"
             @click.stop
+            ref="loginDropdown"
           >
             <li>
               <router-link
@@ -170,32 +168,38 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 
 const isOpen = ref(false);
 const isLoginDropdownOpen = ref(false);
 const headerHeight = ref(0);
-const scrollOffset = ref(20); // Additional offset to scroll a bit more down
-
-onMounted(() => {
-  const headerElement = document.querySelector(".header");
-  if (headerElement) {
-    headerHeight.value = headerElement.offsetHeight;
-  }
-});
+const scrollOffset = ref(20);
+const loginDropdown = ref(null);
 
 const toggleMenu = () => {
   isOpen.value = !isOpen.value;
+  if (!isOpen.value) {
+    closeLoginDropdown();
+  }
 };
 
-const toggleLoginDropdown = () => {
+const toggleLoginDropdown = async () => {
   isLoginDropdownOpen.value = !isLoginDropdownOpen.value;
+  if (isLoginDropdownOpen.value) {
+    await nextTick();
+    if (loginDropdown.value && window.innerWidth < 768) {
+      loginDropdown.value.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+  }
+};
+
+const closeLoginDropdown = () => {
+  isLoginDropdownOpen.value = false;
 };
 
 const scrollToSection = (id) => {
-  console.log(`Header: Attempting to scroll to section: ${id}`);
   isOpen.value = false;
-
+  closeLoginDropdown();
   setTimeout(() => {
     const element = document.getElementById(id);
     if (element) {
@@ -204,27 +208,33 @@ const scrollToSection = (id) => {
         window.pageYOffset -
         headerHeight.value -
         scrollOffset.value;
-      console.log(
-        `Header: Found element with ID: ${id}, scrolling to offset: ${offset}, header height: ${headerHeight.value}, additional offset: ${scrollOffset.value}`
-      );
-      window.scrollTo({
-        top: offset,
-        behavior: "smooth",
-      });
-    } else {
-      console.error(`Header: Element with ID ${id} not found`);
+      window.scrollTo({ top: offset, behavior: "smooth" });
     }
   }, 50);
 };
 
-const closeLoginDropdown = () => {
-  isLoginDropdownOpen.value = false;
+const handleClickOutside = (event) => {
+  const dropdown = document.querySelector(".header__menu-login");
+  if (dropdown && !dropdown.contains(event.target)) {
+    closeLoginDropdown();
+  }
 };
 
+onMounted(() => {
+  const headerElement = document.querySelector(".header");
+  if (headerElement) {
+    headerHeight.value = headerElement.offsetHeight;
+  }
+
+  document.addEventListener("click", handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
 </script>
 
 <style scoped>
-/* Header Styles */
 .header {
   background-color: #1f2937;
   color: white;
@@ -311,7 +321,7 @@ const closeLoginDropdown = () => {
 /* Navigation Menu */
 .header__nav {
   position: absolute;
-  top: 100%; /* Ensures no gap between header and nav */
+  top: 100%;
   right: 0;
   left: 0;
   background-color: #1f2937;
@@ -389,14 +399,12 @@ const closeLoginDropdown = () => {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Accessibility */
 .header__menu-link:focus {
   outline: 2px solid #4299e1;
   outline-offset: 2px;
   border-radius: 0.25rem;
 }
 
-/* Responsive Adjustments */
 @media (max-width: 640px) {
   .header__menu {
     font-size: 0.8125rem;
@@ -415,26 +423,47 @@ const closeLoginDropdown = () => {
 
 .header__menu-login {
   position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .header__menu-login-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
   background: none;
   border: none;
   color: #d1d5db;
+  text-decoration: none;
+  border-radius: 0.25rem;
   cursor: pointer;
-  display: flex;
-  align-items: center;
+  transition: all 0.2s ease;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.header__menu-login-button:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.header__menu-login-button:focus {
+  outline: 2px solid #4299e1;
+  outline-offset: 2px;
 }
 
 .header__menu-login-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .header__menu-login-dropdown {
   position: absolute;
   top: 100%;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #1f2937;
   border-radius: 0.375rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -442,6 +471,38 @@ const closeLoginDropdown = () => {
   list-style: none;
   z-index: 100;
   min-width: 12rem;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .header__menu-login {
+    align-items: stretch;
+  }
+
+  .header__menu-login-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .header__menu-login-dropdown {
+    position: static;
+    transform: none;
+    left: auto;
+    min-width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+    background-color: transparent;
+  }
+
+  .header__menu-login-link {
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+  }
 }
 
 .header__menu-login-link {
@@ -455,14 +516,5 @@ const closeLoginDropdown = () => {
 .header__menu-login-link:hover {
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 640px) {
-  .header__menu-login-dropdown {
-    min-width: 100%;
-    right: 0;
-    left: 0;
-  }
 }
 </style>

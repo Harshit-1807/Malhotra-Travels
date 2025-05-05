@@ -19,10 +19,12 @@ const router = createRouter({
   routes,
 });
 
-// Navigation Guard
 router.beforeEach((to, from, next) => {
   const isAdmin = localStorage.getItem("isAdmin") === "true";
-  if (to.meta.requiresAdmin && !isAdmin) {
+
+  if (to.path === "/admin-login" && isAdmin) {
+    next("/admin-dashboard");
+  } else if (to.meta.requiresAdmin && !isAdmin) {
     next("/admin-login");
   } else {
     next();

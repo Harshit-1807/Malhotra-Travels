@@ -3,52 +3,67 @@
     <div class="admin-login__card">
       <h2 class="admin-login__title">Admin Panel</h2>
 
-      <div class="admin-login__field">
-        <input
-          v-model.trim="username"
-          class="admin-login__input"
-          placeholder="Username"
-          autocomplete="username"
-          aria-label="Username"
-          :aria-invalid="showValidation && !username ? 'true' : 'false'"
-        />
-        <span v-if="showValidation && !username" class="admin-login__validation">Username is required</span>
-      </div>
-
-      <div class="admin-login__field">
-        <div class="admin-login__password-wrapper">
+      <form @submit.prevent="loginAdmin">
+        <div class="admin-login__field">
           <input
-            v-model.trim="password"
-            :type="showPassword ? 'text' : 'password'"
+            v-model.trim="username"
             class="admin-login__input"
-            placeholder="Password"
-            autocomplete="current-password"
-            aria-label="Password"
-            :aria-invalid="showValidation && !password ? 'true' : 'false'"
+            placeholder="Username"
+            autocomplete="username"
+            aria-label="Username"
+            :aria-invalid="showValidation && !username ? 'true' : 'false'"
           />
           <span
-            class="admin-login__toggle"
-            @click="showPassword = !showPassword"
-            role="button"
-            aria-label="Toggle password visibility"
+            v-if="showValidation && !username"
+            class="admin-login__validation"
+            >Username is required</span
           >
-            {{ showPassword ? '🙈' : '👁️' }}
-          </span>
         </div>
-        <span v-if="showValidation && !password" class="admin-login__validation">Password is required</span>
-      </div>
 
-      <button
-        class="admin-login__button"
-        @click="loginAdmin"
-        :disabled="loading"
-        aria-label="Login button"
+        <div class="admin-login__field">
+          <div class="admin-login__password-wrapper">
+            <input
+              v-model.trim="password"
+              :type="showPassword ? 'text' : 'password'"
+              class="admin-login__input"
+              placeholder="Password"
+              autocomplete="current-password"
+              aria-label="Password"
+              :aria-invalid="showValidation && !password ? 'true' : 'false'"
+            />
+            <span
+              class="admin-login__toggle"
+              @click="showPassword = !showPassword"
+              role="button"
+              aria-label="Toggle password visibility"
+            >
+              {{ showPassword ? "🙈" : "👁️" }}
+            </span>
+          </div>
+          <span
+            v-if="showValidation && !password"
+            class="admin-login__validation"
+            >Password is required</span
+          >
+        </div>
+
+        <button
+          class="admin-login__button"
+          type="submit"
+          :disabled="loading"
+          aria-label="Login button"
+        >
+          <span v-if="loading">Logging in...</span>
+          <span v-else>Login</span>
+        </button>
+      </form>
+
+      <p
+        class="admin-login__back"
+        @click="goBack"
+        role="button"
+        aria-label="Back to website"
       >
-        <span v-if="loading">Logging in...</span>
-        <span v-else>Login</span>
-      </button>
-
-      <p class="admin-login__back" @click="goBack" role="button" aria-label="Back to website">
         ← Back to Website
       </p>
 
@@ -110,7 +125,7 @@ const loginAdmin = async () => {
 };
 
 const goBack = () => {
-  router.push("/"); // Again, adjust if homepage is different
+  router.push("/");
 };
 </script>
 
