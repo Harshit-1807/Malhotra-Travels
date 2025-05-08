@@ -142,7 +142,6 @@
     </div>
   </section>
 </template>
-
 <script setup>
 import { reactive, ref } from "vue";
 
@@ -446,6 +445,15 @@ const submitAffiliate = async () => {
 
   .affiliate-info-and-form {
     grid-template-columns: 1fr;
+  }
+
+  .step-box {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .arrow {
+    display: none;
   }
 }
 </style>
