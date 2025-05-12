@@ -85,7 +85,7 @@
           </div>
         </div>
 
-        <div class="initiative-card">
+        <!-- <div class="initiative-card">
           <div class="initiative-card__header">
             <h3 class="initiative-card__title">
               One Booking = One Tree Planted
@@ -153,7 +153,7 @@
               </a>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="initiative-card">
           <div class="initiative-card__header">
