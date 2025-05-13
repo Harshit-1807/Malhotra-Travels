@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <AdminHeader />
+  <div>  
     <main class="admin-dashboard">
       <h2>Welcome, Admin</h2>
       <p>Select an option from the menu to begin.</p>
@@ -9,7 +8,7 @@
 </template>
 
 <script setup>
-import AdminHeader from '../components/AdminHeader.vue';
+
 </script>
 
 <style scoped>

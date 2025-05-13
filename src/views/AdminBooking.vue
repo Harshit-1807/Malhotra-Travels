@@ -4,7 +4,6 @@
       <h2 class="bookings__heading">All Bookings</h2>
       <div>
         <button class="bookings__add" @click="openAddForm">Add Booking</button>
-        <button class="bookings__back" @click="goBack">Back to Dashboard</button>
       </div>
     </div>
 
@@ -18,48 +17,67 @@
       />
       <label for="toDate">To:</label>
       <input type="date" v-model="toDate" id="toDate" class="bookings__input" />
+      <button class="bookings__clear-filter" @click="clearFilters">
+        Clear Filter
+      </button>
     </div>
 
-    <table class="bookings__table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Mobile</th>
-          <th>Pickup</th>
-          <th>Destination</th>
-          <th>Journey Type</th>
-          <th @click="sortByDate" class="bookings__sortable">
-            Date
-            <span v-if="sortAsc">▲</span>
-            <span v-else>▼</span>
-          </th>
+    <div class="bookings__search">
+      <label for="search">Search:</label>
+      <input
+        type="text"
+        v-model="searchQuery"
+        id="search"
+        class="bookings__input"
+        placeholder="Search by name"
+      />
+    </div>
+    <p class="bookings__scroll-hint">Swipe to scroll the table →</p>
+    <div class="bookings__table-container">
+      <table class="bookings__table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Mobile</th>
+            <th>Pickup</th>
+            <th>Destination</th>
+            <th>Journey Type</th>
+            <th @click="sortByDate" class="bookings__sortable">
+              Date
+              <span v-if="sortAsc">▲</span>
+              <span v-else>▼</span>
+            </th>
+            <th>Amount</th>
+            <th>Notes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="booking in filteredBookings" :key="booking.id">
+            <td>{{ booking.name }}</td>
+            <td>{{ booking.mobile }}</td>
+            <td>{{ booking.pickup }}</td>
+            <td>{{ booking.destination }}</td>
+            <td>{{ booking.type }}</td>
+            <td>{{ booking.date }}</td>
+            <td>{{ booking.amount }}</td>
+            <td>{{ booking.notes }}</td>
+            <td>
+              <i
+                class="fas fa-edit bookings__icon"
+                @click="editBooking(booking)"
+              ></i>
+              <i
+                class="fas fa-trash-alt bookings__icon"
+                @click="deleteBooking(booking.id)"
+              ></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
 
-          <th>Notes</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="booking in filteredBookings" :key="booking.id">
-          <td>{{ booking.name }}</td>
-          <td>{{ booking.mobile }}</td>
-          <td>{{ booking.pickup }}</td>
-          <td>{{ booking.destination }}</td>
-          <td>{{ booking.type }}</td>
-          <td>{{ booking.date }}</td>
-          <td>{{ booking.notes }}</td>
-          <td>
-            <i
-              class="fas fa-edit bookings__icon"
-              @click="editBooking(booking)"
-            ></i>
-            <i
-              class="fas fa-trash-alt bookings__icon"
-              @click="deleteBooking(booking.id)"
-            ></i>
-          </td>
-        </tr>
-      </tbody>
-    </table>
     <div class="bookings__pagination">
       <button
         class="bookings__page-button"
@@ -103,12 +121,13 @@ import {
 
 const router = useRouter();
 const bookings = ref([]);
-const selectedBooking = ref({});
+const selectedBooking = ref({ amount: "" });
 const isModalOpen = ref(false);
 const isEditMode = ref(false);
 const fromDate = ref("");
 const toDate = ref("");
 const sortAsc = ref(true);
+const searchQuery = ref("");
 
 // Pagination
 const currentPage = ref(1);
@@ -123,7 +142,9 @@ const filteredBookingsUnpaginated = computed(() => {
     .filter(
       (b) =>
         (!fromDate.value || new Date(b.date) >= new Date(fromDate.value)) &&
-        (!toDate.value || new Date(b.date) <= new Date(toDate.value))
+        (!toDate.value || new Date(b.date) <= new Date(toDate.value)) &&
+        (!searchQuery.value ||
+          b.name.toLowerCase().includes(searchQuery.value.toLowerCase()))
     )
     .sort((a, b) => {
       return sortAsc.value
@@ -158,6 +179,7 @@ function openAddForm() {
     date: "",
     type: "",
     notes: "",
+    amount: "",
   };
   isEditMode.value = false;
   isModalOpen.value = true;
@@ -196,8 +218,10 @@ async function loadBookings() {
   currentPage.value = 1; // reset to first page after load
 }
 
-function goBack() {
-  router.push("/admin-dashboard");
+function clearFilters() {
+  fromDate.value = "";
+  toDate.value = "";
+  searchQuery.value = "";
 }
 
 onMounted(loadBookings);
@@ -232,15 +256,6 @@ onMounted(loadBookings);
   margin-right: 0.5rem;
 }
 
-.bookings__back {
-  background-color: #007bff;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
 .bookings__filter {
   display: flex;
   gap: 1rem;
@@ -248,14 +263,32 @@ onMounted(loadBookings);
   align-items: center;
 }
 
+.bookings__clear-filter {
+  background-color: #dc3545;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
 .bookings__input {
   padding: 0.5rem;
   border-radius: 4px;
   border: 1px solid #ccc;
 }
+.bookings__table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
 
 .bookings__table {
   width: 100%;
+  min-width: 800px;
   border-collapse: collapse;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -277,7 +310,18 @@ onMounted(loadBookings);
   color: #007bff;
   user-select: none;
 }
+.bookings__scroll-hint {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+  display: none;
+}
 
+@media (max-width: 768px) {
+  .bookings__scroll-hint {
+    display: block;
+  }
+}
 
 .bookings__icon {
   cursor: pointer;
@@ -313,5 +357,34 @@ onMounted(loadBookings);
 
 .bookings__page-info {
   font-weight: bold;
+}
+
+.bookings__search {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .bookings__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bookings__filter,
+  .bookings__search {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bookings__input {
+    width: 100%;
+  }
+
+  .bookings__pagination {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 </style>

@@ -1,4 +1,3 @@
-<!-- filepath: c:\Users\Rahul\Repos\Malhotra-Travels\src\views\Home.vue -->
 <template>
   <div>
     <!-- Hero Section -->
