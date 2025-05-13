@@ -5,6 +5,7 @@ import {
   updateDoc,
   deleteDoc,
   addDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
@@ -29,7 +30,10 @@ export const fetchBookings = async () => {
 };
 
 export const addBooking = async (data) => {
-  return await addDoc(collection(db, BOOKINGS_COLLECTION), data);
+  return await addDoc(collection(db, BOOKINGS_COLLECTION), {
+    ...data,
+    createdAt: serverTimestamp(),
+  });
 };
 
 export const updateBooking = async (id, data) => {

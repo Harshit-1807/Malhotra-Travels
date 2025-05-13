@@ -75,17 +75,17 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { db } from "../firebase/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
-
-const router = useRouter();
+import { auth, db } from "../firebase/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const username = ref("");
 const password = ref("");
-const error = ref("");
-const loading = ref(false);
 const showPassword = ref(false);
 const showValidation = ref(false);
+const loading = ref(false);
+const error = ref(""); // ✅ Fix
+const router = useRouter();
 
 const loginAdmin = async () => {
   error.value = "";
@@ -99,25 +99,32 @@ const loginAdmin = async () => {
   loading.value = true;
 
   try {
-    const docRef = doc(db, "Admin", "admin001");
-    const docSnap = await getDoc(docRef);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      username.value,
+      password.value
+    );
 
-    if (docSnap.exists()) {
-      const admin = docSnap.data();
-      if (
-        username.value === admin.username &&
-        password.value === admin.password
-      ) {
+    const user = userCredential.user;
+
+    // 🔍 Check Firestore for user role
+    const userDocRef = doc(db, "Admin", user.uid);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+
+      if (userData.role === "admin") {
         localStorage.setItem("isAdmin", "true");
         router.push("/admin-dashboard");
       } else {
-        error.value = "Invalid username or password.";
+        error.value = "Access denied: You are not an admin.";
       }
     } else {
-      error.value = "Admin credentials not found.";
+      error.value = "No user role found. Please contact support.";
     }
   } catch (err) {
-    error.value = "Error during login.";
+    error.value = "Invalid email or password.";
     console.error(err);
   } finally {
     loading.value = false;
@@ -125,8 +132,8 @@ const loginAdmin = async () => {
 };
 
 const goBack = () => {
-  router.push("/");
-};
+  router.push('/')
+}
 </script>
 
 <style scoped>

@@ -150,6 +150,7 @@ const props = defineProps({
 const emit = defineEmits(["submit", "close"]);
 
 const form = ref({
+  id: props.modelValue?.id ?? "", // Ensure id is included
   name: props.modelValue?.name ?? "",
   mobile: props.modelValue?.mobile ?? "",
   pickup: props.modelValue?.pickup ?? "",
@@ -166,15 +167,17 @@ const mobileError = ref(false);
 watch(
   () => props.modelValue,
   (val) => {
+    console.log("BookingForm received modelValue:", val);
     form.value = {
-      name: val.name ?? "",
-      mobile: val.mobile ?? "",
-      pickup: val.pickup ?? "",
-      destination: val.destination ?? "",
-      date: val.date ?? "",
-      type: val.type ?? "",
-      notes: val.notes ?? "",
-      amount: val.amount ?? "",
+      id: val?.id ?? "", // Ensure id is updated
+      name: val?.name ?? "",
+      mobile: val?.mobile ?? "",
+      pickup: val?.pickup ?? "",
+      destination: val?.destination ?? "",
+      date: val?.date ?? "",
+      type: val?.type ?? "",
+      notes: val?.notes ?? "",
+      amount: val?.amount ?? "",
     };
     mobileError.value = false;
   },
@@ -199,6 +202,7 @@ const onSubmit = async () => {
   validateMobile();
   if (mobileError.value) return;
   isLoading.value = true;
+  console.log("Emitting form data from BookingForm:", form.value);
   await emit("submit", { ...form.value });
   isLoading.value = false;
 };
@@ -225,7 +229,6 @@ onMounted(() => {
   align-items: center;
   z-index: 1000;
   outline: none;
-  
 }
 
 .booking-modal__content {
