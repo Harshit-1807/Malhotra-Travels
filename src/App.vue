@@ -1,9 +1,10 @@
 <template>
+  <Analytics />
   <div class="app">
     <div class="app__wrapper">
       <!-- Show default Header only if not in /admin route -->
       <Header v-if="!isAdminRoute" />
-      
+
       <!-- Admin Header (admin pages only) -->
       <AdminHeader v-if="isAdminRoute" />
 
@@ -16,19 +17,18 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router';
-import { computed } from 'vue';
+import { Analytics } from "@vercel/analytics/vue";
+import { useRoute } from "vue-router";
+import { computed } from "vue";
 
-import Header from './components/Header.vue';
-import Footer from './components/Footer.vue';
-import AdminHeader from './components/AdminHeader.vue';
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
+import AdminHeader from "./components/AdminHeader.vue";
 
 const route = useRoute();
 
-
-const isAdminRoute = computed(() => route.path.startsWith('/admin'));
+const isAdminRoute = computed(() => route.path.startsWith("/admin"));
 </script>
-
 
 <style scoped>
 .app {
