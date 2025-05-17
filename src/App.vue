@@ -3,6 +3,9 @@
     <div class="app__wrapper">
       <!-- Show default Header only if not in /admin route -->
       <Header v-if="!isAdminRoute" />
+      
+      <!-- Admin Header (admin pages only) -->
+      <AdminHeader v-if="isAdminRoute" />
 
       <main class="app__main">
         <router-view />
@@ -18,6 +21,7 @@ import { computed } from 'vue';
 
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
+import AdminHeader from './components/AdminHeader.vue';
 
 const route = useRoute();
 

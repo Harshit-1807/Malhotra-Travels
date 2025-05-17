@@ -3,52 +3,67 @@
     <div class="admin-login__card">
       <h2 class="admin-login__title">Admin Panel</h2>
 
-      <div class="admin-login__field">
-        <input
-          v-model.trim="username"
-          class="admin-login__input"
-          placeholder="Username"
-          autocomplete="username"
-          aria-label="Username"
-          :aria-invalid="showValidation && !username ? 'true' : 'false'"
-        />
-        <span v-if="showValidation && !username" class="admin-login__validation">Username is required</span>
-      </div>
-
-      <div class="admin-login__field">
-        <div class="admin-login__password-wrapper">
+      <form @submit.prevent="loginAdmin">
+        <div class="admin-login__field">
           <input
-            v-model.trim="password"
-            :type="showPassword ? 'text' : 'password'"
+            v-model.trim="username"
             class="admin-login__input"
-            placeholder="Password"
-            autocomplete="current-password"
-            aria-label="Password"
-            :aria-invalid="showValidation && !password ? 'true' : 'false'"
+            placeholder="Username"
+            autocomplete="username"
+            aria-label="Username"
+            :aria-invalid="showValidation && !username ? 'true' : 'false'"
           />
           <span
-            class="admin-login__toggle"
-            @click="showPassword = !showPassword"
-            role="button"
-            aria-label="Toggle password visibility"
+            v-if="showValidation && !username"
+            class="admin-login__validation"
+            >Username is required</span
           >
-            {{ showPassword ? '🙈' : '👁️' }}
-          </span>
         </div>
-        <span v-if="showValidation && !password" class="admin-login__validation">Password is required</span>
-      </div>
 
-      <button
-        class="admin-login__button"
-        @click="loginAdmin"
-        :disabled="loading"
-        aria-label="Login button"
+        <div class="admin-login__field">
+          <div class="admin-login__password-wrapper">
+            <input
+              v-model.trim="password"
+              :type="showPassword ? 'text' : 'password'"
+              class="admin-login__input"
+              placeholder="Password"
+              autocomplete="current-password"
+              aria-label="Password"
+              :aria-invalid="showValidation && !password ? 'true' : 'false'"
+            />
+            <span
+              class="admin-login__toggle"
+              @click="showPassword = !showPassword"
+              role="button"
+              aria-label="Toggle password visibility"
+            >
+              {{ showPassword ? "🙈" : "👁️" }}
+            </span>
+          </div>
+          <span
+            v-if="showValidation && !password"
+            class="admin-login__validation"
+            >Password is required</span
+          >
+        </div>
+
+        <button
+          class="admin-login__button"
+          type="submit"
+          :disabled="loading"
+          aria-label="Login button"
+        >
+          <span v-if="loading">Logging in...</span>
+          <span v-else>Login</span>
+        </button>
+      </form>
+
+      <p
+        class="admin-login__back"
+        @click="goBack"
+        role="button"
+        aria-label="Back to website"
       >
-        <span v-if="loading">Logging in...</span>
-        <span v-else>Login</span>
-      </button>
-
-      <p class="admin-login__back" @click="goBack" role="button" aria-label="Back to website">
         ← Back to Website
       </p>
 
@@ -60,17 +75,17 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { db } from "../firebase/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
-
-const router = useRouter();
+import { auth, db } from "../firebase/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const username = ref("");
 const password = ref("");
-const error = ref("");
-const loading = ref(false);
 const showPassword = ref(false);
 const showValidation = ref(false);
+const loading = ref(false);
+const error = ref(""); // ✅ Fix
+const router = useRouter();
 
 const loginAdmin = async () => {
   error.value = "";
@@ -84,25 +99,32 @@ const loginAdmin = async () => {
   loading.value = true;
 
   try {
-    const docRef = doc(db, "Admin", "admin001");
-    const docSnap = await getDoc(docRef);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      username.value,
+      password.value
+    );
 
-    if (docSnap.exists()) {
-      const admin = docSnap.data();
-      if (
-        username.value === admin.username &&
-        password.value === admin.password
-      ) {
+    const user = userCredential.user;
+
+    // 🔍 Check Firestore for user role
+    const userDocRef = doc(db, "Admin", user.uid);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+
+      if (userData.role === "admin") {
         localStorage.setItem("isAdmin", "true");
         router.push("/admin-dashboard");
       } else {
-        error.value = "Invalid username or password.";
+        error.value = "Access denied: You are not an admin.";
       }
     } else {
-      error.value = "Admin credentials not found.";
+      error.value = "No user role found. Please contact support.";
     }
   } catch (err) {
-    error.value = "Error during login.";
+    error.value = "Invalid email or password.";
     console.error(err);
   } finally {
     loading.value = false;
@@ -110,8 +132,8 @@ const loginAdmin = async () => {
 };
 
 const goBack = () => {
-  router.push("/"); // Again, adjust if homepage is different
-};
+  router.push('/')
+}
 </script>
 
 <style scoped>

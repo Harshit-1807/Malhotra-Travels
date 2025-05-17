@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import AdminLogin from "../views/AdminLogin.vue";
 import AdminDashboard from "../views/AdminDashboard.vue";
 import Home from "../views/Home.vue";
+import AdminBooking from "../views/AdminBooking.vue";
 
 const routes = [
   { path: "/", component: Home },
@@ -9,6 +10,11 @@ const routes = [
   {
     path: "/admin-dashboard",
     component: AdminDashboard,
+    meta: { requiresAdmin: true },
+  },
+  {
+    path: "/admin-bookings",
+    component: AdminBooking,
     meta: { requiresAdmin: true },
   },
   { path: "/:pathMatch(.*)*", redirect: "/" },
@@ -19,10 +25,12 @@ const router = createRouter({
   routes,
 });
 
-// Navigation Guard
 router.beforeEach((to, from, next) => {
   const isAdmin = localStorage.getItem("isAdmin") === "true";
-  if (to.meta.requiresAdmin && !isAdmin) {
+
+  if (to.path === "/admin-login" && isAdmin) {
+    next("/admin-dashboard");
+  } else if (to.meta.requiresAdmin && !isAdmin) {
     next("/admin-login");
   } else {
     next();
