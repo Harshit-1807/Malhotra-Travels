@@ -186,7 +186,6 @@ function openAddForm() {
 }
 
 function editBooking(booking) {
-  console.log("Booking data in editBooking:", booking);
   selectedBooking.value = { ...booking };
   isEditMode.value = true;
   isModalOpen.value = true;
@@ -205,17 +204,10 @@ function closeModal() {
 }
 
 async function handleFormSubmit(data) {
-  console.log("Received data from BookingForm:", data);
-  console.log("isEditMode:", isEditMode.value);
   const { id, ...bookingData } = data;
-  console.log("Extracted id:", id);
-  console.log("Booking data without id:", bookingData);
-
   if (isEditMode.value && id) {
-    console.log("Updating booking with id:", id);
     await updateBooking(id, bookingData);
   } else {
-    console.log("Adding new booking");
     await addBooking(bookingData);
   }
   closeModal();

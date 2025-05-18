@@ -3,7 +3,7 @@
     <!-- Logo/Title on the left -->
     <div class="header__branding">
       <div @click="scrollToSection('home')" class="header__logo">
-        <span class="header__logo-text">Malhotra Travels</span>
+        <span class="header__logo-text">Malhotra Travel</span>
       </div>
     </div>
 
@@ -44,14 +44,14 @@
       ]"
     >
       <ul class="header__menu">
-        <li class="header__menu-item">
+        <!-- <li class="header__menu-item">
           <a
             href="#home"
             @click.prevent="scrollToSection('home')"
             class="header__menu-link"
             >Home</a
           >
-        </li>
+        </li> -->
         <li class="header__menu-item">
           <a
             href="#about"
@@ -65,7 +65,7 @@
             href="#services"
             @click.prevent="scrollToSection('services')"
             class="header__menu-link"
-            >Services</a
+            >Our Services</a
           >
         </li>
         <li class="header__menu-item">
@@ -81,7 +81,7 @@
             href="#affiliate"
             @click.prevent="scrollToSection('affiliate')"
             class="header__menu-link"
-            >Affiliate</a
+            >M-Affiliate</a
           >
         </li>
         <li class="header__menu-item">
@@ -89,7 +89,7 @@
             href="#car-owner"
             @click.prevent="scrollToSection('car-owner')"
             class="header__menu-link"
-            >Join as Car Owner</a
+            >Fleet Partner</a
           >
         </li>
         <li class="header__menu-item">
@@ -148,7 +148,7 @@
                 class="header__menu-login-link"
                 @click="closeLoginDropdown"
               >
-                Login as Car Owner
+                Login as Fleet Partner
               </router-link>
             </li>
             <li>
@@ -157,7 +157,7 @@
                 class="header__menu-login-link"
                 @click="closeLoginDropdown"
               >
-                Login as Affiliate
+                Login as M-Affiliate
               </router-link>
             </li>
           </ul>

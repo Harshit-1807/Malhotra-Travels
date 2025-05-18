@@ -25,30 +25,30 @@
         />
         <ServiceCard
           :icon="MapPinIcon"
-          title="Tour Packages (Coming Soon)"
+          title="Tour Packages - Coming Soon"
           description="Explore Manali, Haridwar, Jaipur, Shimla, and more with our upcoming tour packages, including car + stay deals."
-          ctaText="Notify Me"
+          ctaText="Coming Soon"
           ctaLink="#"
           iconColor="#10B981"
           :isComingSoon="true"
         />
         <ServiceCard
           :icon="CurrencyDollarIcon"
-          title="Affiliate Program"
-          description="Earn 5–10% commission per booking by referring clients to us. Special rewards after 10, 20, or 50 referrals!"
-          ctaText="Join Now"
+          title="M-Affiliate Program"
+          description="Join our exclusive affiliate network and earn guaranteed 10% commission on every successful booking. Zero investment required!"
+          ctaText="Notify Me"
           ctaLink="#affiliate"
           iconColor="#F59E0B"
-          :whatsappLink="'https://wa.me/+918950899123?text=I%20want%20to%20know%20more%20about%20the%20Affiliate%20Program'"
+          :whatsappLink="'https://wa.me/+918950899123?text=Hi,%20%I%20want%20to%20know%20more%20about%20the%20M-Affiliate%20Program'"
         />
         <ServiceCard
           :icon="KeyIcon"
-          title="Idle Car Owner Collaboration"
+          title="Fleet Partner"
           description="Got an idle car? Partner with us, and we'll use it for bookings while paying you per trip."
-          ctaText="Submit Details"
+          ctaText="Notify Me"
           ctaLink="#car-owner"
           iconColor="#3B82F6"
-          :whatsappLink="'https://wa.me/+918950899123?text=I%20want%20to%20know%20more%20about%20Idle%20Car%20Owner%20Collaboration'"
+          :whatsappLink="'https://wa.me/+918950899123?text=Hi,%20%I%20want%20to%20know%20more%20about%20Fleet%20Partner%20Program'"
         />
       </div>
     </div>

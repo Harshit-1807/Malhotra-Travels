@@ -25,13 +25,13 @@
             href="#affiliate"
             @click.prevent="scrollToSection('affiliate')"
             class="hero__button hero__button--green"
-            >Become an Affiliate</a
+            >Join M-Affiliate</a
           >
           <a
             href="#car-owner"
             @click.prevent="scrollToSection('car-owner')"
             class="hero__button hero__button--yellow"
-            >Join with Your Car</a
+            >Join as Fleet Partner</a
           >
         </div>
       </div>
@@ -41,15 +41,11 @@
 
 <script setup>
 const scrollToSection = (id) => {
-  console.log(`HeroSection: Attempting to scroll to ${id}`);
   setTimeout(() => {
     const element = document.getElementById(id);
     if (element) {
       const headerHeight = 64; // Match Header.vue
       const offset = element.offsetTop - headerHeight;
-      console.log(
-        `HeroSection: Found element with ID: ${id}, scrolling to offset: ${offset}`
-      );
       window.scrollTo({
         top: offset,
         behavior: "smooth",

@@ -1,90 +1,298 @@
 <template>
-    <div class="testimonials">
-      <div class="testimonials__container">
-        <h2 class="testimonials__title">What Our Clients Say</h2>
-        <div class="testimonials__grid">
-          <div
-            v-for="(testimonial, index) in testimonials"
-            :key="index"
-            class="testimonial-card"
-          >
-            <div class="testimonial-card__content">
-              <p class="testimonial-card__text">"{{ testimonial.text }}"</p>
-              <p class="testimonial-card__author">- {{ testimonial.name }}</p>
+  <div class="testimonials">
+    <div class="testimonials__container">
+      <h2 class="testimonials__title">What Our Customers Say</h2>
+      <div class="testimonials__slider">
+
+        <!-- Navigation Arrows -->
+        <button 
+          class="nav-button nav-button--prev" 
+          @click="prevSlide"
+          :disabled="currentSlide === 0"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <!-- Slider Wrapper -->
+        <div class="testimonials__wrapper">
+          <div class="testimonials__grid">
+            <div
+              v-for="(testimonial, index) in paginatedTestimonials"
+              :key="index"
+              class="testimonial-card"
+            >
+              <div class="testimonial-card__content">
+                <div class="testimonial-card__rating">★★★★★</div>
+                <p class="testimonial-card__text">"{{ testimonial.text }}"</p>
+                <p class="testimonial-card__author">- {{ testimonial.name }}</p>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Next Arrow -->
+        <button 
+          class="nav-button nav-button--next" 
+          @click="nextSlide"
+          :disabled="currentSlide >= maxSlides"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Dots Navigation -->
+        <div class="dots-navigation">
+          <button
+            v-for="n in totalDots"
+            :key="n"
+            class="dot"
+            :class="{ 'dot--active': currentSlide === n - 1 }"
+            @click="goToSlide(n - 1)"
+          ></button>
+        </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "TestimonialsSection",
-    props: {
-      testimonials: {
-        type: Array,
-        required: true,
-      },
+  </div>
+</template>
+
+
+<script>
+export default {
+  name: "TestimonialsSection",
+  props: {
+    testimonials: {
+      type: Array,
+      required: true,
     },
-  };
-  </script>
-  
-  <style scoped>
-  .testimonials {
-    padding: 2rem;
-    background-color: #fff;
-  }
-  
-  .testimonials__container {
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  
-  .testimonials__title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 2rem;
-  }
-  
+  },
+  data() {
+    return {
+      currentSlide: 0,
+      itemsPerSlide: 3,
+      windowWidth: window.innerWidth,
+    };
+  },
+  computed: {
+    paginatedTestimonials() {
+      const start = this.currentSlide * this.itemsPerSlide;
+      const end = start + this.itemsPerSlide;
+      return this.testimonials.slice(start, end);
+    },
+    maxSlides() {
+      return Math.max(Math.ceil(this.testimonials.length / this.itemsPerSlide) - 1, 0);
+    },
+    totalDots() {
+      return Math.ceil(this.testimonials.length / this.itemsPerSlide);
+    },
+  },
+  methods: {
+    nextSlide() {
+      if (this.currentSlide < this.maxSlides) {
+        this.currentSlide++;
+      }
+    },
+    prevSlide() {
+      if (this.currentSlide > 0) {
+        this.currentSlide--;
+      }
+    },
+    goToSlide(index) {
+      this.currentSlide = index;
+    },
+    handleResize() {
+      if (this.windowWidth !== window.innerWidth) {
+        this.windowWidth = window.innerWidth;
+        this.itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+        this.currentSlide = 0; // Reset to start
+      }
+    }
+  },
+  mounted() {
+    this.handleResize();
+    window.addEventListener("resize", this.handleResize);
+
+    // Optional auto-slide
+    this.interval = setInterval(() => {
+      this.currentSlide = this.currentSlide < this.maxSlides ? this.currentSlide + 1 : 0;
+    }, 5000);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+    clearInterval(this.interval);
+  },
+};
+</script>
+
+<style scoped>
+.testimonials {
+  padding: 4rem 2rem;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.testimonials__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.testimonials__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 3rem;
+}
+
+.testimonials__slider {
+  position: relative;
+  overflow: hidden;
+  padding: 0 40px;
+}
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  transition: transform 0.5s ease;
+}
+
+.testimonial-card {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+}
+
+.testimonial-card__rating {
+  color: #FFD700;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.testimonial-card__content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.testimonial-card__text {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+  line-height: 1.6;
+}
+
+.testimonial-card__author {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  text-align: right;
+  margin-top: auto;
+}
+
+/* Navigation buttons */
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: #f8f8f8;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nav-button svg {
+  width: 24px;
+  height: 24px;
+  color: #333;
+}
+
+.nav-button--prev {
+  left: 0;
+}
+
+.nav-button--next {
+  right: 0;
+}
+
+/* Dots navigation */
+.dots-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ddd;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot--active {
+  background: #333;
+  transform: scale(1.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
   .testimonials__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .testimonial-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  
-  .testimonial-card__content {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
-  
-  .testimonial-card__text {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 1rem;
-    flex-grow: 1;
+}
+
+@media (max-width: 768px) {
+  .testimonials__grid {
+    grid-template-columns: 1fr;
   }
 
-  .testimonial-card__author {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #333;
-    text-align: right;
-    margin-top: auto;
-    align-self: flex-end;
+  .testimonials__title {
+    font-size: 2rem;
   }
-  </style>
+
+  .nav-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav-button svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+</style>
