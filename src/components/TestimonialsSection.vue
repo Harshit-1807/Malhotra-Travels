@@ -79,13 +79,14 @@ const paginatedTestimonials = computed(() => {
 const maxSlides = computed(() => Math.max(Math.ceil(props.testimonials.length / itemsPerSlide.value) - 1, 0));
 const totalDots = computed(() => Math.ceil(props.testimonials.length / itemsPerSlide.value));
 
-const goNext = () => {
+
+const nextSlide = () => {
   if (currentSlide.value < maxSlides.value) {
     currentSlide.value++;
   }
 };
 
-const goPrev = () => {
+const prevSlide = () => {
   if (currentSlide.value > 0) {
     currentSlide.value--;
   }
