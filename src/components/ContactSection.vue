@@ -2,7 +2,7 @@
 <template>
   <section class="contact">
     <div class="contact__container">
-      <h2 class="contact__title">Get in Touch</h2>
+      <h2 class="contact__title">Get In Touch</h2>
       <div class="contact__content">
         <p class="contact__paragraph">
           We're here to make your travel seamless. Reach out for bookings,
