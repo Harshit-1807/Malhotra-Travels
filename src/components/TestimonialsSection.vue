@@ -3,7 +3,6 @@
     <div class="testimonials__container">
       <h2 class="testimonials__title">What Our Customers Say</h2>
       <div class="testimonials__slider">
-
         <!-- Navigation Arrows -->
         <button 
           class="nav-button nav-button--prev" 
@@ -57,75 +56,74 @@
     </div>
   </div>
 </template>
+<script setup>
+import { ref, computed, onMounted, onUnmounted, watchEffect } from 'vue';
 
+const props = defineProps({
+  testimonials: {
+    type: Array,
+    required: true,
+  },
+});
 
-<script>
-export default {
-  name: "TestimonialsSection",
-  props: {
-    testimonials: {
-      type: Array,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      currentSlide: 0,
-      itemsPerSlide: 3,
-      windowWidth: window.innerWidth,
-    };
-  },
-  computed: {
-    paginatedTestimonials() {
-      const start = this.currentSlide * this.itemsPerSlide;
-      const end = start + this.itemsPerSlide;
-      return this.testimonials.slice(start, end);
-    },
-    maxSlides() {
-      return Math.max(Math.ceil(this.testimonials.length / this.itemsPerSlide) - 1, 0);
-    },
-    totalDots() {
-      return Math.ceil(this.testimonials.length / this.itemsPerSlide);
-    },
-  },
-  methods: {
-    nextSlide() {
-      if (this.currentSlide < this.maxSlides) {
-        this.currentSlide++;
-      }
-    },
-    prevSlide() {
-      if (this.currentSlide > 0) {
-        this.currentSlide--;
-      }
-    },
-    goToSlide(index) {
-      this.currentSlide = index;
-    },
-    handleResize() {
-      if (this.windowWidth !== window.innerWidth) {
-        this.windowWidth = window.innerWidth;
-        this.itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
-        this.currentSlide = 0; // Reset to start
-      }
-    }
-  },
-  mounted() {
-    this.handleResize();
-    window.addEventListener("resize", this.handleResize);
+const currentSlide = ref(0);
+const itemsPerSlide = ref(3);
+const windowWidth = ref(window.innerWidth);
 
-    // Optional auto-slide
-    this.interval = setInterval(() => {
-      this.currentSlide = this.currentSlide < this.maxSlides ? this.currentSlide + 1 : 0;
-    }, 5000);
-  },
-  beforeUnmount() {
-    window.removeEventListener("resize", this.handleResize);
-    clearInterval(this.interval);
-  },
+const paginatedTestimonials = computed(() => {
+  const start = currentSlide.value * itemsPerSlide.value;
+  const end = start + itemsPerSlide.value;
+  return props.testimonials.slice(start, end);
+});
+
+const maxSlides = computed(() => Math.max(Math.ceil(props.testimonials.length / itemsPerSlide.value) - 1, 0));
+const totalDots = computed(() => Math.ceil(props.testimonials.length / itemsPerSlide.value));
+
+const goNext = () => {
+  if (currentSlide.value < maxSlides.value) {
+    currentSlide.value++;
+  }
 };
-</script>
 
+const goPrev = () => {
+  if (currentSlide.value > 0) {
+    currentSlide.value--;
+  }
+};
+
+const goToSlide = (index) => {
+  currentSlide.value = index;
+};
+
+const updateItemsPerSlide = () => {
+  if (windowWidth.value < 768) {
+    itemsPerSlide.value = 1;
+  } else if (windowWidth.value < 1024) {
+    itemsPerSlide.value = 2;
+  } else {
+    itemsPerSlide.value = 3;
+  }
+  currentSlide.value = 0; // Reset to start when resizing
+};
+
+onMounted(() => {
+  updateItemsPerSlide();
+  window.addEventListener('resize', updateItemsPerSlide);
+
+  const interval = setInterval(() => {
+    if (currentSlide.value < maxSlides.value) {
+      currentSlide.value++;
+    } else {
+      currentSlide.value = 0;
+    }
+  }, 5000);
+
+  onUnmounted(() => {
+    clearInterval(interval);
+    window.removeEventListener('resize', updateItemsPerSlide);
+  });
+});
+</script>
 <style scoped>
 .testimonials {
   padding: 4rem 2rem;
