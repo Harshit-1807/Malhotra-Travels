@@ -4,24 +4,19 @@
       <h2 class="about__title">Who We Are</h2>
       <div class="about__content">
         <p class="about__paragraph">
-          Welcome to Malhotra Travels, your go-to travel partner based in
-          Rohtak-Dadri-Bhiwani. We specialize in providing safe, affordable, and
-          comfortable travel services for outstation trips, weddings, events,
-          and soon, curated tour packages.
-        </p>
-        <p class="about__paragraph">
-          Our well-maintained cars and experienced drivers ensure a smooth ride
-          every time. Beyond rentals, we're building a community through our
-          affiliate program, where you can earn by referring clients, and our
-          car owner collaboration, where your idle car can generate income.
+          Welcome to Malhotra Travel, your go-to travel partner based in
+          Rohtak-Dadri-Bhiwani. Our well-maintained cars and experienced drivers
+          ensure a smooth ride every time. We specialize in providing safe,
+          affordable, and comfortable travel services for outstation trips,
+          weddings, events, and soon, curated tour packages.
         </p>
         <p class="about__paragraph about__paragraph--bold">
-          At Malhotra Travels, your journey matters. Let's travel together!
+          At Malhotra Travel, your journey matters. Let's travel together!
         </p>
       </div>
 
       <div class="initiatives">
-        <h2 class="initiatives__title">Special Initiatives</h2>
+        <h2 class="initiatives__title">Special Initiative</h2>
 
         <div class="initiative-card">
           <div class="initiative-card__header">
@@ -41,7 +36,7 @@
             </p>
             <p>
               Whether it's a hospital visit, surgery support, or emergency
-              relocation, our team ensures fast dispatch, courteous service, and
+              relocation, we ensures fast dispatch, courteous service, and
               priority handling.
             </p>
             <p>
@@ -50,7 +45,7 @@
             </p>
             <div class="initiative-card__actions">
               <a
-                href="https://wa.me/918950899123?text=Medical%20Emergency%20Support%20Required"
+                href="https://wa.me/918950899123?text=Hi%2C%20I%20need%20medical%20emergency%20support"
                 class="action-button action-button--whatsapp"
               >
                 <svg
@@ -98,7 +93,7 @@
               <div class="tree-counter__value">1,245</div>
             </div>
             <p>
-              Every time you book a ride with Malhotra Travels, you help build a
+              Every time you book a ride with Malhotra Travel, you help build a
               greener future.
             </p>
             <ul class="initiative-card__list">
@@ -154,16 +149,16 @@
             </div>
           </div>
         </div> -->
-
+<!-- 
         <div class="initiative-card">
           <div class="initiative-card__header">
-            <h3 class="initiative-card__title">First Ride Surprise</h3>
+            <h3 class="initiative-card__title">First Ride Gift</h3>
             <p class="initiative-card__subtitle">
               Welcome Gift for New Customers!
             </p>
           </div>
           <div class="initiative-card__content">
-            <p>New to Malhotra Travels? We've got a surprise for you.</p>
+            <p>New to Malhotra Travel? We've got a gift for you.</p>
             <p class="initiative-card__highlight">
               Get a special welcome gift on your first ride!
             </p>
@@ -175,7 +170,7 @@
             </ul>
             <p>Because your first journey with us should be unforgettable.</p>
             <p class="initiative-card__cta">
-              Book now and unwrap your surprise!
+              Book now and unwrap your gift!
             </p>
             <div class="initiative-card__actions">
               <a
@@ -213,7 +208,7 @@
               </a>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

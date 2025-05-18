@@ -167,7 +167,6 @@ const mobileError = ref(false);
 watch(
   () => props.modelValue,
   (val) => {
-    console.log("BookingForm received modelValue:", val);
     form.value = {
       id: val?.id ?? "", // Ensure id is updated
       name: val?.name ?? "",
@@ -202,7 +201,6 @@ const onSubmit = async () => {
   validateMobile();
   if (mobileError.value) return;
   isLoading.value = true;
-  console.log("Emitting form data from BookingForm:", form.value);
   await emit("submit", { ...form.value });
   isLoading.value = false;
 };

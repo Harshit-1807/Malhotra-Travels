@@ -2,9 +2,9 @@
   <section class="car-owner-section">
     <div class="car-owner-section__container">
       <div class="car-owner-section__header">
-        <h1 class="car-owner-section__title">Partner with Us</h1>
+        <h1 class="car-owner-section__title">Become Our Fleet Partner</h1>
         <p class="car-owner-section__description">
-          Got an idle car? Partner with us and earn by letting us use your car
+          Got an idle car? Become our fleet partner and earn by letting us use your car
           for bookings. Fill out the form below to get started!
         </p>
       </div>
@@ -102,7 +102,7 @@
             <li>✅ Earn passive income with your idle car</li>
             <li>✅ Hassle-free process and quick approvals</li>
             <li>✅ Transparent and secure payments</li>
-            <li>✅ Join a trusted network of car owners</li>
+            <!-- <li>✅ Join a trusted network of car owners</li> -->
           </ul>
         </div>
 
@@ -112,7 +112,7 @@
           :disabled="isSubmitting"
         >
           <span v-if="isSubmitting">Processing...</span>
-          <span v-else>Submit Your Car Details</span>
+          <span v-else>Notify Me</span>
         </button>
       </form>
 
@@ -122,7 +122,7 @@
           <span class="success__icon">🎉</span>
           <h3 class="success__title">Details Submitted Successfully!</h3>
           <p class="success__message">
-            Thank you for partnering with us. We'll contact you shortly.
+            Thank you for partnering with us. We'll notify you once our Fleet Partner Program is launched.
           </p>
         </div>
       </div>

@@ -2,8 +2,8 @@
   <Analytics />
   <div class="app">
     <div class="app__wrapper">
-      <!-- Show default Header only if not in /admin route -->
-      <Header v-if="!isAdminRoute" />
+      <!-- Show default Header only if not in admin route and showHeaderFooter is true -->
+      <Header v-if="!isAdminRoute && shouldShowHeaderFooter" />
 
       <!-- Admin Header (admin pages only) -->
       <AdminHeader v-if="isAdminRoute" />
@@ -11,7 +11,9 @@
       <main class="app__main">
         <router-view />
       </main>
-      <Footer v-if="!isAdminRoute" />
+
+      <!-- Show Footer only if not in admin route and showHeaderFooter is true -->
+      <Footer v-if="!isAdminRoute && shouldShowHeaderFooter" />
     </div>
   </div>
 </template>
@@ -28,6 +30,9 @@ import AdminHeader from "./components/AdminHeader.vue";
 const route = useRoute();
 
 const isAdminRoute = computed(() => route.path.startsWith("/admin"));
+const shouldShowHeaderFooter = computed(
+  () => route.meta.showHeaderFooter !== false
+);
 </script>
 
 <style scoped>

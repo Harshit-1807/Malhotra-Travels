@@ -1,15 +1,13 @@
 <template>
   <section class="affiliate-section">
     <!-- Heading -->
-    <h1 class="affiliate-section__heading">Become an Affiliate Partner</h1>
+    <h1 class="affiliate-section__heading">Become Our Affiliate Partner</h1>
 
     <!-- Content Wrapper -->
     <div class="affiliate-section__content">
       <!-- Affiliate Program Explanation -->
       <div class="affiliate-intro">
-        <h2 class="affiliate-intro__title">
-          📢 What is the Affiliate Program?
-        </h2>
+        <h2 class="affiliate-intro__title">📢 What is M-Affiliate Program?</h2>
         <p class="affiliate-intro__desc">
           It’s simple. Just refer new bookings to Malhotra Car Rental. When a
           booking is successfully completed, you earn a
@@ -49,24 +47,24 @@
             </li>
             <li>🛻 <strong>No car required:</strong> Just refer & earn</li>
             <li>
-              📲 <strong>Refer easily:</strong> Share via WhatsApp or form
+              📲 <strong>Refer easily:</strong> Share via WhatsApp or mobile
             </li>
             <li>💸 <strong>Easy payouts:</strong> UPI every week</li>
             <li>
               🏆 <strong>Rewards:</strong> Bonus for first 3 bookings in 7 days
             </li>
             <li>
-              🏅 <strong>Referral bonus:</strong> ₹200 if you bring another
-              affiliate who books
+              🎯 <strong>Referral Rewards:</strong> Earn ₹200 for each successful
+              affiliate referral
             </li>
-            <li>
+            <!-- <li>
               📈 <strong>High earning potential:</strong> Earn up to ₹50,000 per
               month
             </li>
             <li>
               🌐 <strong>Global reach:</strong> Refer bookings from anywhere in
               the world
-            </li>
+            </li> -->
             <li>
               📈 <strong>Exclusive promotions:</strong> Special offers for top
               affiliates
@@ -76,7 +74,7 @@
             🔐 Takes less than 2 minutes<br />
             📞 Questions?
             <a
-              href="https://wa.me/918950899123"
+              :href="'https://wa.me/+918950899123?text=Hi,%20%I%20want%20to%20know%20more%20about%20M-Affiliate%20Program'"
               target="_blank"
               class="whatsapp-link"
               >WhatsApp us directly</a
@@ -115,7 +113,7 @@
               required
               placeholder="10-digit mobile number"
               pattern="[0-9]{10,15}"
-              title="Enter a valid mobile number (10–15 digits)"
+              title="Enter a valid mobile number (10 digits)"
             />
           </div>
 
@@ -131,11 +129,12 @@
 
           <button type="submit" :disabled="isSubmitting">
             <span v-if="isSubmitting">Processing...</span>
-            <span v-else>✅ Join Now</span>
+            <span v-else>Notify Me</span>
           </button>
 
           <p v-if="formSubmitted" class="success-msg">
-            🎉 <strong>Success!</strong> We’ll reach out to you soon.
+            🎉 <strong>Success!</strong> We’ll notify you once our M-Affiliate
+            program is launched.
           </p>
         </form>
       </div>
@@ -154,7 +153,6 @@ const submitAffiliate = async () => {
   isSubmitting.value = true;
   try {
     await new Promise((resolve) => setTimeout(resolve, 800));
-    console.log("Submitted:", form);
     formSubmitted.value = true;
     Object.keys(form).forEach((key) => (form[key] = ""));
     setTimeout(() => (formSubmitted.value = false), 5000);

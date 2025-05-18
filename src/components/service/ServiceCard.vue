@@ -81,7 +81,6 @@ defineProps({
 const scrollToSection = (event) => {
   event.preventDefault();
   const id = event.currentTarget.getAttribute("href").slice(1);
-  console.log(`ServiceCard: Scrolling to ${id}`);
   const element = document.getElementById(id);
   if (element) {
     element.scrollIntoView({ behavior: "smooth" });

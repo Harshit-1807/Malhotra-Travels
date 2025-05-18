@@ -55,17 +55,17 @@ import ContactSection from "../components/ContactSection.vue";
 
 const testimonials = [
   {
-    name: "Priya S., Rohtak",
-    text: "Malhotra Travels made our wedding day perfect! The Ertiga was beautifully decorated, and the driver was so polite. Highly recommend!",
+    name: "Priya, Rohtak",
+    text: "Malhotra Travel made our wedding day perfect! The Ertiga was beautifully decorated, and the driver was so polite. Highly recommend!",
   },
   {
-    name: "Rajesh K., Bhiwani",
+    name: "Rajesh, Bhiwa\ni",
     text: "Booked for a family trip to Haridwar. Comfortable ride, affordable price, and great service. Will book again!",
   },
   {
-    name: "Anil M., Kalanaur",
-    text: "The affiliate program is awesome! I've earned commissions just by sharing their link with my contacts.",
-  },
+    name: "Amit, Kalanaur",
+    text: "Safe and reliable service. Driver was punctual and the car was very clean. Perfect for family trips!",
+  }
 ];
 </script>
 

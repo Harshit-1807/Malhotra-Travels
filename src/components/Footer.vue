@@ -7,46 +7,100 @@
           <h3 class="footer__heading">Quick Links</h3>
           <ul class="footer__list">
             <li class="footer__list-item">
-              <a href="#home" @click="scrollToSection('home')" class="footer__link">Home</a>
+              <a
+                href="#home"
+                @click="scrollToSection('home')"
+                class="footer__link"
+                >Home</a
+              >
             </li>
             <li class="footer__list-item">
-              <a href="#services" @click="scrollToSection('services')" class="footer__link">Services</a>
+              <a
+                href="#services"
+                @click="scrollToSection('services')"
+                class="footer__link"
+                >Services</a
+              >
             </li>
             <li class="footer__list-item">
-              <a href="#book-now" @click="scrollToSection('book-now')" class="footer__link">Book Now</a>
+              <a
+                href="#book-now"
+                @click="scrollToSection('book-now')"
+                class="footer__link"
+                >Book Now</a
+              >
             </li>
             <li class="footer__list-item">
-              <a href="#affiliate" @click="scrollToSection('affiliate')" class="footer__link">Affiliate</a>
+              <a
+                href="#affiliate"
+                @click="scrollToSection('affiliate')"
+                class="footer__link"
+                >M-Affiliate</a
+              >
             </li>
             <li class="footer__list-item">
-              <a href="#car-owner" @click="scrollToSection('car-owner')" class="footer__link">Join as Car Owner</a>
+              <a
+                href="#car-owner"
+                @click="scrollToSection('car-owner')"
+                class="footer__link"
+                >Fleet Partner</a
+              >
             </li>
             <li class="footer__list-item">
-              <a href="#contact" @click="scrollToSection('contact')" class="footer__link">Contact</a>
+              <a
+                href="#contact"
+                @click="scrollToSection('contact')"
+                class="footer__link"
+                >Contact Us</a
+              >
             </li>
           </ul>
         </div>
         <div class="footer__column">
           <h3 class="footer__heading">Legal</h3>
           <ul class="footer__list">
-            <li class="footer__list-item"><a href="#" class="footer__link">Privacy Policy</a></li>
-            <li class="footer__list-item"><a href="#" class="footer__link">Terms & Conditions</a></li>
+            <li class="footer__list-item">
+              <router-link
+                to="/privacy-policy"
+                class="footer__link"
+                @click="scrollToTop"
+                >Privacy Policy</router-link
+              >
+            </li>
+            <li class="footer__list-item">
+              <router-link
+                to="/terms-and-conditions"
+                class="footer__link"
+                @click="scrollToTop"
+                >Terms & Conditions</router-link
+              >
+            </li>
           </ul>
         </div>
         <div class="footer__column">
           <h3 class="footer__heading">Follow Us</h3>
           <ul class="footer__list footer__list--social">
             <li class="footer__list-item">
-              <a href="#" class="footer__link footer__social-link" aria-label="Instagram">Instagram</a>
+              <a
+                href="#"
+                class="footer__link footer__social-link"
+                aria-label="Instagram"
+                >Instagram</a
+              >
             </li>
             <li class="footer__list-item">
-              <a href="#" class="footer__link footer__social-link" aria-label="Facebook">Facebook</a>
+              <a
+                href="#"
+                class="footer__link footer__social-link"
+                aria-label="Facebook"
+                >Facebook</a
+              >
             </li>
           </ul>
         </div>
       </div>
       <p class="footer__copyright">
-        © 2025 Malhotra Travels. All Rights Reserved.
+        © 2025 Malhotra Travel. All Rights Reserved.
       </p>
     </div>
   </footer>
@@ -59,6 +113,12 @@ const scrollToSection = (id) => {
     element.scrollIntoView({ behavior: "smooth" });
   }
 };
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
 </script>
 
 <style scoped>
@@ -67,7 +127,8 @@ const scrollToSection = (id) => {
   color: white;
   padding: 3rem 0 2rem;
   width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 .footer__container {
@@ -79,7 +140,10 @@ const scrollToSection = (id) => {
 
 .footer__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Ensure all columns have equal width */
+  grid-template-columns: repeat(
+    3,
+    1fr
+  ); /* Ensure all columns have equal width */
   gap: 2rem; /* Consistent gap between all columns */
   justify-content: space-between;
 }
@@ -141,7 +205,7 @@ const scrollToSection = (id) => {
 }
 
 .footer__link::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 0;
   height: 1px;
@@ -170,7 +234,10 @@ const scrollToSection = (id) => {
   }
 
   .footer__grid {
-    grid-template-columns: repeat(3, 1fr); /* Ensure all columns are visible and equal width */
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ); /* Ensure all columns are visible and equal width */
     gap: 2rem; /* Consistent gap between columns */
   }
 
@@ -193,7 +260,10 @@ const scrollToSection = (id) => {
   }
 
   .footer__grid {
-    grid-template-columns: repeat(3, 1fr); /* Ensure equal width for all columns */
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ); /* Ensure equal width for all columns */
     gap: 20.5rem; /* Consistent gap for larger screens */
   }
 

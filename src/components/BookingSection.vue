@@ -2,9 +2,9 @@
   <div class="booking">
     <div class="booking__container">
       <div class="booking__header">
-        <h2 class="booking__title">Book Your Dream Ride Now!</h2>
+        <h2 class="booking__title">Book Your Ride Now!</h2>
         <p class="booking__description">
-          Experience the ultimate comfort and convenience with our luxurious
+          Experience the ultimate comfort and convenience with our affordable
           rides. Whether it's a romantic getaway, a family vacation, or a
           business trip, we've got you covered.
         </p>
@@ -110,9 +110,9 @@
               required
             >
               <option value="" disabled>Select journey type</option>
-              <option value="roundtrip">Round Trip</option>
+              <option value="outstation">Outstation</option>
               <option value="wedding">Wedding/Event</option>
-              <option value="tour">Tour Package</option>
+              <option value="Medical support">Medical Support</option>
             </select>
           </div>
 
@@ -158,7 +158,7 @@
           <span class="success__icon">🎉</span>
           <h3 class="success__title">Booking Request Received!</h3>
           <p class="success__message">
-            Thank you for choosing Malhotra Travels. We'll confirm your booking
+            Thank you for choosing Malhotra Travel. We'll confirm your booking
             shortly.
           </p>
         </div>
