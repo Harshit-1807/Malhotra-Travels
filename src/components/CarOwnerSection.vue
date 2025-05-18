@@ -97,7 +97,7 @@
         </div>
 
         <div class="car-owner-form__benefits">
-          <h3 class="benefits__title">Why Partner with Us?</h3>
+          <h3 class="benefits__title">Why Partner With Us?</h3>
           <ul class="benefits__list">
             <li>✅ Earn passive income with your idle car</li>
             <li>✅ Hassle-free process and quick approvals</li>

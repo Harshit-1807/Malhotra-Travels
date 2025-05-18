@@ -40,7 +40,7 @@
       <!-- Motivation / Bonus Section and Affiliate Form -->
       <div class="affiliate-info-and-form">
         <div class="affiliate-info">
-          <h2 class="affiliate-info__title">🔥 Why Become an Affiliate?</h2>
+          <h2 class="affiliate-info__title">🔥 Why Become Our Affiliate?</h2>
           <ul class="affiliate-info__list">
             <li>
               🎯 <strong>Monthly leaderboard:</strong> Top 3 get ₹1000 bonus
