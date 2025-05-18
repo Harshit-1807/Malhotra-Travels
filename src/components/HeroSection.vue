@@ -1,16 +1,14 @@
 <template>
   <section class="hero">
     <img
-      src="/images/Ertiga.png"
+      src="/images/Ertiga.webp"
       alt="Banner image"
       class="hero__image"
       @error="handleImageError"
     />
     <div class="hero__overlay">
       <div class="hero__content">
-        <h1 class="hero__title">
-          Your Trusted Travel Partner
-        </h1>
+        <h1 class="hero__title">Your Trusted Travel Partner</h1>
         <p class="hero__subtitle">
           Outstation Trips | Weddings | Tour Packages
         </p>
@@ -134,7 +132,8 @@ const handleImageError = () => {
   color: white;
 }
 
-.hero__button--blue:hover, .hero__button--blue:focus {
+.hero__button--blue:hover,
+.hero__button--blue:focus {
   background-color: #1d4ed8;
   transform: translateY(-2px);
 }
@@ -144,7 +143,8 @@ const handleImageError = () => {
   color: white;
 }
 
-.hero__button--green:hover, .hero__button--green:focus {
+.hero__button--green:hover,
+.hero__button--green:focus {
   background-color: #2ecc71;
   transform: translateY(-2px);
 }
@@ -154,7 +154,8 @@ const handleImageError = () => {
   color: black;
 }
 
-.hero__button--yellow:hover, .hero__button--yellow:focus {
+.hero__button--yellow:hover,
+.hero__button--yellow:focus {
   background-color: #f2c464;
   transform: translateY(-2px);
 }

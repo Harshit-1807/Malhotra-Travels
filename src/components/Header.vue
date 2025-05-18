@@ -3,6 +3,11 @@
     <!-- Logo/Title on the left -->
     <div class="header__branding">
       <div @click="scrollToSection('home')" class="header__logo">
+        <img
+          src="/images/malhotra-travels-logo.webp"
+          alt="Malhotra Travels Logo"
+          class="header__logo-image"
+        />
         <span class="header__logo-text">Malhotra Travel</span>
       </div>
     </div>
@@ -252,6 +257,17 @@ onBeforeUnmount(() => {
   max-width: 1350px;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+.header__logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.header__logo-image {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 @media (min-width: 1530px) {
