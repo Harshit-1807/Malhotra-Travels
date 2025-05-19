@@ -9,7 +9,7 @@
       <div class="affiliate-intro">
         <h2 class="affiliate-intro__title">📢 What is M-Affiliate Program?</h2>
         <p class="affiliate-intro__desc">
-          It’s simple. Just refer new bookings to Malhotra Car Rental. When a
+          It’s simple. Just refer new bookings to Malhotra Travel. When a
           booking is successfully completed, you earn a
           <strong>flat 10% commission</strong> — no investment, no car required.
           Earn more through exciting bonuses and referral rewards!
