@@ -49,14 +49,6 @@
       ]"
     >
       <ul class="header__menu">
-        <!-- <li class="header__menu-item">
-          <a
-            href="#home"
-            @click.prevent="scrollToSection('home')"
-            class="header__menu-link"
-            >Home</a
-          >
-        </li> -->
         <li class="header__menu-item">
           <a
             href="#about"
@@ -253,10 +245,10 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   max-width: 1350px;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+  margin: 0 auto;
 }
 .header__logo {
   display: flex;
@@ -476,8 +468,9 @@ onBeforeUnmount(() => {
 }
 
 .header__menu-login-dropdown {
+  display: block;
   position: absolute;
-  top: 100%;
+  top: calc(100% + 0.25rem);
   left: 50%;
   transform: translateX(-50%);
   background-color: #1f2937;
@@ -485,9 +478,9 @@ onBeforeUnmount(() => {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 0.5rem 0;
   list-style: none;
-  z-index: 100;
+  z-index: 10000;
   min-width: 12rem;
-  text-align: center;
+  text-align: left;
 }
 
 @media (max-width: 767px) {
@@ -502,8 +495,8 @@ onBeforeUnmount(() => {
 
   .header__menu-login-dropdown {
     position: static;
-    transform: none;
     left: auto;
+    transform: none;
     min-width: 100%;
     text-align: center;
     margin: 0;

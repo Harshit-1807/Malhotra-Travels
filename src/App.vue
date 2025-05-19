@@ -2,36 +2,40 @@
   <Analytics />
   <div class="app">
     <div class="app__wrapper">
-      <!-- Show default Header only if not in admin route and showHeaderFooter is true -->
-      <Header v-if="!isAdminRoute && shouldShowHeaderFooter" />
+      <!-- Default public header -->
+      <Header v-if="shouldShowHeaderFooter" />
 
-      <!-- Admin Header (admin pages only) -->
-      <AdminHeader v-if="isAdminRoute" />
+      <!-- Admin header (only if logged in) -->
+      <AdminHeader v-if="shouldShowAdminHeader" />
 
       <main class="app__main">
         <router-view />
       </main>
 
-      <!-- Show Footer only if not in admin route and showHeaderFooter is true -->
-      <Footer v-if="!isAdminRoute && shouldShowHeaderFooter" />
+      <!-- Default public footer -->
+      <Footer v-if="shouldShowHeaderFooter" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { Analytics } from "@vercel/analytics/vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
+import { useAdmin } from "./composables/useAdmin";
 
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import AdminHeader from "./components/AdminHeader.vue";
 
 const route = useRoute();
+const { isAdmin } = useAdmin();
 
 const isAdminRoute = computed(() => route.path.startsWith("/admin"));
+const shouldShowAdminHeader = computed(
+  () => isAdminRoute.value && isAdmin.value
+);
 const shouldShowHeaderFooter = computed(
-  () => route.meta.showHeaderFooter !== false
+  () => !isAdminRoute.value && route.meta.showHeaderFooter !== false
 );
 </script>
 

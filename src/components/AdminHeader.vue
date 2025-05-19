@@ -29,7 +29,7 @@
       <button @click="goBack" class="admin-header__link">
         Back to Website
       </button>
-      <button @click="logout" class="admin-header__logout">Logout</button>
+      <button @click="handleLogout" class="admin-header__logout">Logout</button>
     </nav>
   </header>
 </template>
@@ -37,12 +37,14 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useAdmin } from '../composables/useAdmin';
 
 const router = useRouter();
 const isMenuOpen = ref(false);
+const { logout } = useAdmin();
 
-const logout = () => {
-  localStorage.removeItem("isAdmin");
+const handleLogout = () => {
+  logout(); 
   router.push("/admin-login");
 };
 
