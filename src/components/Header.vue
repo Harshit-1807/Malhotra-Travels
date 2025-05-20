@@ -479,7 +479,7 @@ onBeforeUnmount(() => {
   padding: 0.5rem 0;
   list-style: none;
   z-index: 10000;
-  min-width: 12rem;
+  min-width: 8.1rem;
   text-align: left;
 }
 

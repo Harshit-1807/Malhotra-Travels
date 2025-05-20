@@ -37,7 +37,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { useAdmin } from '../composables/useAdmin';
+import { useAdmin } from '../../composables/useAdmin';
 
 const router = useRouter();
 const isMenuOpen = ref(false);

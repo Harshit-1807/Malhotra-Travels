@@ -25,7 +25,7 @@ import { useAdmin } from "./composables/useAdmin";
 
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
-import AdminHeader from "./components/AdminHeader.vue";
+import AdminHeader from "./components/AdminComponents/AdminHeader.vue";
 
 const route = useRoute();
 const { isAdmin } = useAdmin();
