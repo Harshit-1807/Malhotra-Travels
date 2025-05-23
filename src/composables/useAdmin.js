@@ -1,4 +1,3 @@
-// composables/useAdmin.js
 import { ref } from 'vue';
 
 const isAdmin = ref(localStorage.getItem('isAdmin') === 'true');

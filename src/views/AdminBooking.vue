@@ -216,7 +216,6 @@ async function handleFormSubmit(data) {
 
 async function loadBookings() {
   bookings.value = await fetchBookings();
-  currentPage.value = 1; // reset to first page after load
 }
 
 function clearFilters() {
