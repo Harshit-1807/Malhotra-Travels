@@ -111,7 +111,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import BookingForm from "../components/BookingForm.vue";
+import BookingForm from "../components/AdminComponents/BookingForm.vue";
 import {
   fetchBookings,
   deleteBooking as deleteBookingFromService,
@@ -216,7 +216,6 @@ async function handleFormSubmit(data) {
 
 async function loadBookings() {
   bookings.value = await fetchBookings();
-  currentPage.value = 1; // reset to first page after load
 }
 
 function clearFilters() {

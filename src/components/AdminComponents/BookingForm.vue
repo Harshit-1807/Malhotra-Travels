@@ -82,9 +82,9 @@
             required
           >
             <option disabled value="">Select Journey Type</option>
-            <option>Round trip</option>
+            <option>Outstation</option>
             <option>Wedding/Event</option>
-            <option>Tour Package</option>
+            <option>Medical Support</option>
           </select>
         </label>
 
