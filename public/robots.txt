@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin-dashboard
+Disallow: /admin-bookings
+Disallow: /admin-carOwner
+Disallow: /admin-login
+
+Allow: /
+
+Sitemap: https://malhotratravel.com/sitemap.xml
