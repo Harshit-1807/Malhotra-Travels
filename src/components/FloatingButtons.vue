@@ -62,8 +62,8 @@
 
 @media (max-width: 768px) {
   .floating-buttons {
-    bottom: 10px;
-    right: 10px;
+    bottom: 20px;
+    right: 20px;
   }
 
   .contact-btn {
@@ -79,8 +79,8 @@
 
 @media (max-width: 480px) {
   .floating-buttons {
-    bottom: 5px;
-    right: 5px;
+    bottom: 15px;
+    right: 15px;
   }
 
   .contact-btn {
