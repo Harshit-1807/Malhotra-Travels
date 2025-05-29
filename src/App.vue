@@ -2,18 +2,15 @@
   <Analytics />
   <div class="app">
     <div class="app__wrapper">
-      <!-- Default public header -->
-      <Header v-if="shouldShowHeaderFooter" />
-
-      <!-- Admin header (only if logged in) -->
-      <AdminHeader v-if="shouldShowAdminHeader" />
+      <Header v-if="!isAdminRoute && shouldShowHeaderFooter" />
+      <AdminHeader v-if="isAdminRoute" />
 
       <main class="app__main">
         <router-view />
+        <FloatingButtons />
       </main>
 
-      <!-- Default public footer -->
-      <Footer v-if="shouldShowHeaderFooter" />
+      <Footer v-if="!isAdminRoute && shouldShowHeaderFooter" />
     </div>
   </div>
 </template>
@@ -26,7 +23,7 @@ import { useAdmin } from "./composables/useAdmin";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import AdminHeader from "./components/AdminComponents/AdminHeader.vue";
-
+import FloatingButtons from "./components/FloatingButtons.vue";
 const route = useRoute();
 const { isAdmin } = useAdmin();
 
