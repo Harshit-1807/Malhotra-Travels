@@ -5,6 +5,8 @@ import PrivacyPolicy from "../views/PrivacyPolicy.vue";
 import TermsAndConditions from "../views/TermsAndConditions.vue"; 
 import Home from "../views/Home.vue";
 import AdminBooking from "../views/AdminBooking.vue";
+import AdminCarOwner from "../views/AdminCarOwner.vue";
+import AdminAffiliate from "../views/AdminAffiliate.vue";
 
 const routes = [
   { 
@@ -35,6 +37,16 @@ const routes = [
   {
     path: "/admin-bookings",
     component: AdminBooking,
+    meta: { requiresAdmin: true },
+  },
+  {
+    path: "/admin-carOwner",
+    component: AdminCarOwner,
+    meta: { requiresAdmin: true },
+  },
+  {
+    path: "/admin-affiliate",
+    component: AdminAffiliate,
     meta: { requiresAdmin: true },
   },
   { path: "/:pathMatch(.*)*", redirect: "/" },
