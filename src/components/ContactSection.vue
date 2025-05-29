@@ -10,14 +10,21 @@
         </p>
         <p class="contact__info">
           📞 Phone:
-          <a href="tel:+918950899123" class="contact__link">7056476225</a>
+          <a href="tel:+917056476225" class="contact__link">7056476225</a>
           |
           <a href="tel:+917015487899" class="contact__link">7015487899</a>
+        </p>
+        <p class="contact__info">
+          📧 Email:
+          <a href="mailto:info@malhotratravel.com" class="contact__link">info@malhotratravel.com</a>
+          |
+          <a href="mailto:rahul@malhotratravel.com" class="contact__link">rahul@malhotratravel.com</a>
         </p>
         <p class="contact__info">📍 Location: Kalanaur, Rohtak, Haryana</p>
         <a
           href="https://wa.me/+918950899123?text=Hi"
           target="_blank"
+          rel="noopener noreferrer"
           class="contact__whatsapp-button"
         >
           WhatsApp Us
@@ -25,7 +32,9 @@
         <p class="contact__social-title">Follow Us:</p>
         <div class="contact__social-links">
           <a
-            href="#"
+            :href="instagramLink"
+            :target="isMobile ? '_self' : '_blank'"
+            rel="noopener noreferrer"
             class="contact__social-link contact__social-link--instagram"
           >
             <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -36,7 +45,9 @@
             Instagram
           </a>
           <a
-            href="#"
+            :href="facebookLink"
+            :target="isMobile ? '_self' : '_blank'"
+            rel="noopener noreferrer"
             class="contact__social-link contact__social-link--facebook"
           >
             <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -55,6 +66,35 @@
 <script>
 export default {
   name: "ContactSection",
+  data() {
+    return {
+      isMobile: false,
+    };
+  },
+  computed: {
+    instagramLink() {
+      return this.isMobile
+        ? "instagram://user?username=malhotra__travel"
+        : "https://www.instagram.com/malhotra__travel/";
+    },
+    facebookLink() {
+      return this.isMobile
+        ? "fb://profile/61576055834880"
+        : "https://www.facebook.com/profile.php?id=61576055834880";
+    },
+  },
+  mounted() {
+    this.checkDevice();
+    window.addEventListener("resize", this.checkDevice);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.checkDevice);
+  },
+  methods: {
+    checkDevice() {
+      this.isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    },
+  },
 };
 </script>
 
@@ -97,9 +137,11 @@ export default {
   color: #007bff;
   text-decoration: none;
   font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 .contact__link:hover {
+  color: #0056b3;
   text-decoration: underline;
 }
 
@@ -127,6 +169,7 @@ export default {
   margin-top: 1rem;
   margin-bottom: 0.5rem;
 }
+
 .contact__social-link--instagram {
   background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   color: white;
@@ -139,12 +182,10 @@ export default {
 
 .contact__social-link--instagram:hover {
   background: linear-gradient(45deg, #e78b2c 0%, #d85f36 25%, #cc233c 50%, #bb1f5d 75%, #a9157a 100%);
-  color: white;
 }
 
 .contact__social-link--facebook:hover {
   background-color: #0d6cf2;
-  color: white;
 }
 
 .social-icon {
@@ -153,10 +194,8 @@ export default {
   margin-right: 8px;
   vertical-align: middle;
   transition: transform 0.3s ease;
-  fill: currentColor;
 }
 
-/* Update existing styles */
 .contact__social-links {
   display: flex;
   justify-content: center;
@@ -174,16 +213,49 @@ export default {
   min-width: 140px;
   justify-content: center;
 }
+
 @media (max-width: 768px) {
+  .contact__container {
+    padding: 0 1rem;
+  }
+
+  .contact__title {
+    font-size: 1.75rem;
+  }
+
+  .contact__info {
+    font-size: 0.9rem;
+  }
+
   .contact__social-links {
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .contact__social-link {
-    width: 200px;
+    width: 100%;
+    max-width: 200px;
     justify-content: center;
+  }
+
+  .contact__whatsapp-button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact {
+    padding: 1.5rem;
+  }
+
+  .contact__title {
+    font-size: 1.5rem;
+  }
+
+  .contact__paragraph {
+    font-size: 0.9rem;
   }
 }
 </style>
