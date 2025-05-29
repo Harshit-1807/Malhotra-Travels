@@ -3,7 +3,7 @@
   <div class="app">
     <div class="app__wrapper">
       <Header v-if="!isAdminRoute && shouldShowHeaderFooter" />
-      <AdminHeader v-if="isAdminRoute" />
+      <AdminHeader v-if="isAdminRoute && shouldShowAdminHeader" />
 
       <main class="app__main">
         <router-view />
