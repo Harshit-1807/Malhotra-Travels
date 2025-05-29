@@ -2,7 +2,7 @@
   <div class="floating-buttons">
     <!-- WhatsApp Button -->
     <a
-      href="https://wa.me/918950899123"
+      href="https://wa.me/918950899123?text=Hello!%20I%E2%80%99m%20interested%20in%20booking%20a%20car"
       target="_blank"
       rel="noopener"
       class="contact-btn whatsapp"
