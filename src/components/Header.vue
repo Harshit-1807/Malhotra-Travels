@@ -478,7 +478,7 @@ onBeforeUnmount(() => {
 .header__menu-login-dropdown {
   position: absolute;
   top: 100%;
-  left: 50%;
+  left: 12%;
   transform: translateX(-50%);
   background-color: #1f2937;
   border-radius: 0.375rem;

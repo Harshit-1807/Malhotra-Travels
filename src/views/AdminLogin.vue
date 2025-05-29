@@ -74,6 +74,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { useAdmin } from '../composables/useAdmin';
 import { useRouter } from "vue-router";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebaseConfig";
@@ -86,6 +87,8 @@ const showValidation = ref(false);
 const loading = ref(false);
 const error = ref(""); // ✅ Fix
 const router = useRouter();
+
+const { login } = useAdmin();
 
 const loginAdmin = async () => {
   error.value = "";
@@ -116,6 +119,7 @@ const loginAdmin = async () => {
 
       if (userData.role === "admin") {
         localStorage.setItem("isAdmin", "true");
+        login();
         router.push("/admin-dashboard");
       } else {
         error.value = "Access denied: You are not an admin.";

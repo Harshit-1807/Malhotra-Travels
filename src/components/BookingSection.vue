@@ -110,7 +110,7 @@
               required
             >
               <option value="" disabled>Select journey type</option>
-              <option value="outstation">Outstation</option>
+              <option value="Outstation">Outstation</option>
               <option value="wedding">Wedding/Event</option>
               <option value="Medical support">Medical Support</option>
             </select>

@@ -9,7 +9,7 @@
       <div class="affiliate-intro">
         <h2 class="affiliate-intro__title">📢 What is M-Affiliate Program?</h2>
         <p class="affiliate-intro__desc">
-          It’s simple. Just refer new bookings to Malhotra Car Rental. When a
+          It’s simple. Just refer new bookings to Malhotra Travel. When a
           booking is successfully completed, you earn a
           <strong>flat 10% commission</strong> — no investment, no car required.
           Earn more through exciting bonuses and referral rewards!
@@ -54,8 +54,8 @@
               🏆 <strong>Rewards:</strong> Bonus for first 3 bookings in 7 days
             </li>
             <li>
-              🎯 <strong>Referral Rewards:</strong> Earn ₹200 for each successful
-              affiliate referral
+              🎯 <strong>Referral Rewards:</strong> Earn ₹200 for each
+              successful affiliate referral
             </li>
             <!-- <li>
               📈 <strong>High earning potential:</strong> Earn up to ₹50,000 per
@@ -108,12 +108,13 @@
             <label for="mobile">📱 Mobile Number</label>
             <input
               v-model="form.mobile"
-              type="tel"
+              type="text"
               id="mobile"
               required
               placeholder="10-digit mobile number"
-              pattern="[0-9]{10,15}"
-              title="Enter a valid mobile number (10 digits)"
+              maxlength="10"
+              inputmode="numeric"
+              @input="validateMobile"
             />
           </div>
 
@@ -141,21 +142,32 @@
     </div>
   </section>
 </template>
+
 <script setup>
 import { reactive, ref } from "vue";
+import { saveAffiliate } from "../firebase/affiliateService";
 
 const form = reactive({ name: "", mobile: "", email: "" });
 const isSubmitting = ref(false);
 const formSubmitted = ref(false);
 const formRef = ref(null);
 
+const validateMobile = (event) => {
+  // Remove all non-digit characters and limit to 10 digits
+  form.mobile = event.target.value.replace(/\D/g, "").slice(0, 10);
+};
+
 const submitAffiliate = async () => {
+  if (form.mobile.length !== 10) return alert("Mobile must be 10 digits");
+
   isSubmitting.value = true;
   try {
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await saveAffiliate(form); // Save to Firestore
     formSubmitted.value = true;
     Object.keys(form).forEach((key) => (form[key] = ""));
     setTimeout(() => (formSubmitted.value = false), 5000);
+  } catch (error) {
+    alert("Error saving affiliate. Please try again.");
   } finally {
     isSubmitting.value = false;
   }

@@ -16,19 +16,23 @@
 </template>
 
 <script setup>
-import { Analytics } from "@vercel/analytics/vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
+import { useAdmin } from "./composables/useAdmin";
 
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
-import AdminHeader from "./components/AdminHeader.vue";
+import AdminHeader from "./components/AdminComponents/AdminHeader.vue";
 import FloatingButtons from "./components/FloatingButtons.vue";
 const route = useRoute();
+const { isAdmin } = useAdmin();
 
 const isAdminRoute = computed(() => route.path.startsWith("/admin"));
+const shouldShowAdminHeader = computed(
+  () => isAdminRoute.value && isAdmin.value
+);
 const shouldShowHeaderFooter = computed(
-  () => route.meta.showHeaderFooter !== false
+  () => !isAdminRoute.value && route.meta.showHeaderFooter !== false
 );
 </script>
 
