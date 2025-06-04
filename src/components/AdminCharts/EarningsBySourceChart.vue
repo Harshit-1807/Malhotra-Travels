@@ -33,11 +33,9 @@ import { ref, onMounted } from "vue";
 import { Doughnut } from "vue-chartjs";
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
 import { fetchBookings } from "../../firebase/bookingService";
+import { fetchAffiliates } from "@/firebase/affiliateService"; 
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
-
-// Constants
-const AFFILIATE_EARNINGS = 0;
 
 const chartData = ref({
   labels: ["Direct", "Affiliates"],
@@ -63,6 +61,7 @@ const affiliatePercentage = ref(0);
 
 onMounted(async () => {
   const bookings = await fetchBookings();
+  const affiliates = await fetchAffiliates();
 
   const directEarnings = bookings.reduce((sum, booking) => {
     const amount =
@@ -70,29 +69,30 @@ onMounted(async () => {
     return sum + amount;
   }, 0);
 
-  const total = directEarnings + AFFILIATE_EARNINGS;
+  const affiliateEarnings = affiliates.reduce((sum, affiliate) => {
+    const amount = parseFloat(affiliate.amount?.toString()) || 0;
+    return sum + amount;
+  }, 0);
 
-  // Add hardcoded fallback for testing
-  const finalDirect = directEarnings || 1000;
-  const finalAffiliate = AFFILIATE_EARNINGS;
+  const total = directEarnings + affiliateEarnings;
 
   chartData.value = {
     labels: ["Direct", "Affiliates"],
     datasets: [
       {
-        data: [finalDirect, finalAffiliate],
+        data: [directEarnings, affiliateEarnings],
         backgroundColor: ["#00cec9", "#0984e3"],
         borderWidth: 0,
       },
     ],
   };
 
-  console.log("Chart data set to:", chartData.value);
-
-  directPercentage.value = Math.round((finalDirect / (finalDirect + finalAffiliate)) * 100);
+  directPercentage.value =
+    total === 0 ? 0 : Math.round((directEarnings / total) * 100);
   affiliatePercentage.value = 100 - directPercentage.value;
-});
 
+  console.log("Chart data set to:", chartData.value);
+});
 </script>
 
 <style scoped>
@@ -127,7 +127,6 @@ onMounted(async () => {
   min-width: 140px;
   min-height: 140px;
 }
-
 
 .earnings-source__chart {
   width: 60%;

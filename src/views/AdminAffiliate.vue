@@ -62,6 +62,17 @@
               <span v-if="sortKey === 'email' && sortAsc">▲</span>
               <span v-else-if="sortKey === 'email'">▼</span>
             </th>
+            <th
+              @click="sortBy('amount')"
+              :class="[
+                'admin-affiliates__sortable',
+                sortKey === 'amount' ? 'admin-affiliates__active' : '',
+              ]"
+            >
+              Amount
+              <span v-if="sortKey === 'amount' && sortAsc">▲</span>
+              <span v-else-if="sortKey === 'amount'">▼</span>
+            </th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -70,6 +81,7 @@
             <td>{{ affiliate.name }}</td>
             <td>{{ affiliate.mobile }}</td>
             <td>{{ affiliate.email }}</td>
+            <td>{{ affiliate.amount }}</td>
             <td>
               <i
                 class="fas fa-edit affiliates__icon"
