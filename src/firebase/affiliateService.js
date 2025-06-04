@@ -56,3 +56,34 @@ export const updateAffiliate = async (affiliateData) => {
     throw new Error("Failed to update affiliate: " + error.message);
   }
 };
+
+export const fetchTopAffiliatesByAmount = async () => {
+  try {
+    const snapshot = await getDocs(affiliatesCollection);
+    const earningsMap = {};
+
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      const name = data.name || "Unnamed";
+      const amount = Number(data.amount) || 0;
+
+      if (!earningsMap[name]) {
+        earningsMap[name] = 0;
+      }
+      earningsMap[name] += amount;
+    });
+
+    // Convert to array and sort descending
+    const sorted = Object.entries(earningsMap)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5); // top 5
+
+    const labels = sorted.map(([name]) => name);
+    const values = sorted.map(([, amount]) => amount);
+    
+
+    return { labels, values };
+  } catch (error) {
+    throw new Error("Failed to fetch top affiliates: " + error.message);
+  }
+};
