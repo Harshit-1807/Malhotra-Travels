@@ -53,7 +53,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="booking in filteredBookings" :key="booking.id">
+          <tr v-for="(booking, index) in filteredBookings" :key="booking.id || 'no-id-' + index">
             <td>{{ booking.name }}</td>
             <td>{{ booking.mobile }}</td>
             <td>{{ booking.pickup }}</td>
@@ -129,7 +129,6 @@ const toDate = ref("");
 const sortAsc = ref(true);
 const searchQuery = ref("");
 
-// Pagination
 const currentPage = ref(1);
 const pageSize = 10;
 
@@ -172,6 +171,7 @@ function sortByDate() {
 
 function openAddForm() {
   selectedBooking.value = {
+    id: "",
     name: "",
     mobile: "",
     pickup: "",
@@ -186,15 +186,27 @@ function openAddForm() {
 }
 
 function editBooking(booking) {
-  selectedBooking.value = { ...booking };
+  console.log("Editing booking:", booking);
+  selectedBooking.value = { ...booking, id: booking.id };
   isEditMode.value = true;
   isModalOpen.value = true;
 }
 
 async function deleteBooking(id) {
+  console.log("Deleting booking ID:", id);
+  if (!id) {
+    console.error("No valid ID provided for deletion");
+    alert("Cannot delete booking: Invalid ID");
+    return;
+  }
   if (confirm("Are you sure you want to delete this booking?")) {
-    await deleteBookingFromService(id);
-    await loadBookings();
+    try {
+      await deleteBookingFromService(id);
+      await loadBookings();
+    } catch (error) {
+      console.error("Error deleting booking:", error);
+      alert("Failed to delete booking. Please try again.");
+    }
   }
 }
 
@@ -205,10 +217,12 @@ function closeModal() {
 
 async function handleFormSubmit(data) {
   const { id, ...bookingData } = data;
+  console.log("Submitting form:", { id, bookingData });
   if (isEditMode.value && id) {
     await updateBooking(id, bookingData);
   } else {
-    await addBooking(bookingData);
+    const docRef = await addBooking(bookingData);
+    bookingData.id = docRef.id;
   }
   closeModal();
   await loadBookings();

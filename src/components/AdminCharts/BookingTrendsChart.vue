@@ -1,12 +1,21 @@
+```vue
 <template>
   <div class="booking-trends">
     <div class="booking-trends__header">
       <h2 class="booking-trends__title">Booking Trends</h2>
-      <select class="booking-trends__select" v-model="selectedView">
-        <option value="daily">Daily</option>
-        <option value="weekly">Weekly</option>
-        <option value="monthly">Monthly</option>
-      </select>
+      <div class="booking-trends__controls">
+        <select class="booking-trends__select" v-model="selectedMonthYear" :disabled="selectedView === 'monthly'">
+          <option value="" disabled>Select Month & Year</option>
+          <option v-for="monthYear in availableMonthYears" :key="monthYear.value" :value="monthYear.value">
+            {{ monthYear.label }}
+          </option>
+        </select>
+        <select class="booking-trends__select" v-model="selectedView">
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
+      </div>
     </div>
 
     <Bar
@@ -18,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 import { Bar } from "vue-chartjs";
 import {
   Chart as ChartJS,
@@ -41,106 +50,80 @@ ChartJS.register(
 );
 
 const selectedView = ref("daily");
+const selectedMonthYear = ref("");
 const chartData = ref({ labels: [], datasets: [] });
+const bookingsData = ref([]);
 
-// Track months for each label
-const labelMonths = ref([]);
+// Compute available month-year combinations
+const availableMonthYears = computed(() => {
+  const months = new Set();
+  bookingsData.value.forEach((b) => {
+    const date = b.date?.toDate ? b.date.toDate() : new Date(b.date);
+    const yearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+    months.add(yearMonth);
+  });
+  return Array.from(months)
+    .sort()
+    .map((yearMonth) => {
+      const [year, month] = yearMonth.split("-").map(Number);
+      const date = new Date(year, month - 1);
+      return {
+        value: yearMonth,
+        label: `${date.toLocaleString("default", { month: "long" })} ${year}`,
+      };
+    });
+});
 
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
-    legend: { display: true }, // Enable legend to show "Bookings"
-    bottomMonthLabel: {
-      months: [], // Array of { month, startIndex, endIndex }
-    },
-  },
-  layout: {
-    padding: {
-      bottom: 50,
-    },
+    legend: { display: true },
   },
   scales: {
     x: {
       grid: { display: false },
       ticks: {
-        callback: (val, index) => {
-          return chartData.value.labels[index];
-        },
-        autoSkip: false,
+        callback: (val, index) => chartData.value.labels[index],
+        autoSkip: true,
+        maxTicksLimit: 10,
         maxRotation: 0,
         minRotation: 0,
-        font: {
-          size: 12,
-        },
+        font: { size: 12 },
+        padding: 5,
       },
     },
     y: {
       beginAtZero: true,
-      ticks: {
-        stepSize: 1,
-      },
+      ticks: { stepSize: 1 },
       grid: { drawBorder: false },
+    },
+  },
+  layout: {
+    padding: {
+      left: 10,
+      right: 10,
+      bottom: 20,
     },
   },
 };
 
-// Plugin to draw month names below x-axis for multiple months
-const bottomMonthLabelPlugin = {
-  id: "bottomMonthLabel",
-  afterDraw(chart, args, options) {
-    const { ctx, chartArea, scales } = chart;
-    const { bottom } = chartArea;
-    const xScale = scales.x;
-    const monthGroups = options.months;
+const processData = (bookings, viewType, selectedMonthYear) => {
+  let filteredBookings = bookings;
 
-    if (!monthGroups || monthGroups.length === 0) return;
-
-    ctx.save();
-    ctx.font = "bold 13px sans-serif";
-    ctx.fillStyle = "#666";
-    ctx.textAlign = "center";
-
-    monthGroups.forEach((group) => {
-      const { month, startIndex, endIndex } = group;
-      // Ensure indices are within bounds
-      const startPos = xScale.getPixelForTick(startIndex);
-      const endPos =
-        endIndex === chart.data.labels.length - 1
-          ? xScale.getPixelForTick(endIndex) +
-            (xScale.getPixelForTick(endIndex) -
-              xScale.getPixelForTick(endIndex - 1)) /
-              2
-          : xScale.getPixelForTick(endIndex);
-      const middle = (startPos + endPos) / 2;
-      ctx.fillText(month, middle, bottom + 40);
+  // Filter by selected month-year for daily and weekly views
+  if (viewType !== "monthly" && selectedMonthYear) {
+    const [year, month] = selectedMonthYear.split("-").map(Number);
+    filteredBookings = bookings.filter((b) => {
+      const date = b.date?.toDate ? b.date.toDate() : new Date(b.date);
+      return date.getFullYear() === year && date.getMonth() + 1 === month;
     });
-
-    ctx.restore();
-  },
-};
-
-ChartJS.register(bottomMonthLabelPlugin);
-
-const getDateSuffix = (d) => {
-  if (d > 3 && d < 21) return "th";
-  switch (d % 10) {
-    case 1:
-      return "st";
-    case 2:
-      return "nd";
-    case 3:
-      return "rd";
-    default:
-      return "th";
   }
-};
 
-const processData = (bookings, viewType) => {
   const grouped = {};
-  const monthMap = []; // Store month for each key
+  const labels = [];
 
-  bookings.forEach((b) => {
+  filteredBookings.forEach((b) => {
     const dateObj = b.date?.toDate ? b.date.toDate() : new Date(b.date);
     let key;
 
@@ -152,87 +135,46 @@ const processData = (bookings, viewType) => {
         break;
       }
       case "monthly":
-        key = `${dateObj.getFullYear()}-${String(
-          dateObj.getMonth() + 1
-        ).padStart(2, "0")}`;
+        key = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, "0")}`;
         break;
       default:
         key = dateObj.toISOString().split("T")[0];
     }
 
     grouped[key] = (grouped[key] || 0) + 1;
-    monthMap.push({
-      key,
-      month: dateObj.toLocaleString("default", { month: "long" }),
-    });
   });
 
   const sortedKeys = Object.keys(grouped).sort();
-  let labels = [];
 
   switch (viewType) {
     case "daily":
-      labels = sortedKeys.map((key) => {
+      labels.push(...sortedKeys.map((key) => {
         const date = new Date(key);
-        const day = date.getDate();
-        return `${day}${getDateSuffix(day)}`;
-      });
+        return date.getDate().toString();
+      }));
       break;
     case "weekly":
-      labels = sortedKeys.map((key) => {
+      labels.push(...sortedKeys.map((key) => {
         const startDate = new Date(key);
         const endDate = new Date(startDate);
         endDate.setDate(startDate.getDate() + 6);
         const startDay = startDate.getDate();
         const endDay = endDate.getDate();
         return `${startDay}-${endDay}`;
-      });
+      }));
       break;
     case "monthly":
-      labels = sortedKeys.map((key) => {
+      labels.push(...sortedKeys.map((key) => {
         const date = new Date(key);
-        return date.toLocaleString("default", { month: "long" });
-      });
+        return date.toLocaleString("default", { month: "short" });
+      }));
       break;
   }
 
-  // Group months by consecutive labels
-  const monthGroups = [];
-  let currentMonth = null;
-  let startIndex = 0;
-
-  sortedKeys.forEach((key, index) => {
-    const entry = monthMap.find((m) => m.key === key);
-    const month = entry ? entry.month : "";
-
-    if (month !== currentMonth) {
-      if (currentMonth !== null) {
-        monthGroups.push({
-          month: currentMonth,
-          startIndex,
-          endIndex: index - 1,
-        });
-      }
-      currentMonth = month;
-      startIndex = index;
-    }
-
-    if (index === sortedKeys.length - 1) {
-      monthGroups.push({
-        month: currentMonth,
-        startIndex,
-        endIndex: index,
-      });
-    }
-  });
-
-  // For monthly view, skip the bottom label since months are already on the x-axis
-  // For daily and weekly, ensure month names are shown
-  chartOptions.plugins.bottomMonthLabel.months =
-    viewType === "monthly" ? [] : monthGroups;
-
-  // Update labelMonths for external reference if needed
-  labelMonths.value = monthMap;
+  // Adjust bar width based on number of data points
+  const dataPointCount = sortedKeys.length;
+  const barPercentage = dataPointCount === 1 ? 0.2 : 0.5; // Thinner bar for single data point
+  const categoryPercentage = dataPointCount === 1 ? 0.3 : 0.6; // Less spacing for single data point
 
   return {
     labels,
@@ -240,21 +182,28 @@ const processData = (bookings, viewType) => {
       {
         label: "Bookings",
         data: sortedKeys.map((k) => grouped[k]),
-        backgroundColor: "#3498db",
+        backgroundColor: "#0984e3",
         borderRadius: 4,
-        barThickness: 20,
+        barPercentage, // Dynamic bar width
+        categoryPercentage, // Dynamic spacing
       },
     ],
   };
 };
 
 const loadChartData = async () => {
-  const bookings = await fetchBookings();
-  chartData.value = processData(bookings, selectedView.value);
+  if (!bookingsData.value.length) {
+    bookingsData.value = await fetchBookings();
+    // Set default month-year to the most recent
+    if (availableMonthYears.value.length) {
+      selectedMonthYear.value = availableMonthYears.value[availableMonthYears.value.length - 1].value;
+    }
+  }
+  chartData.value = processData(bookingsData.value, selectedView.value, selectedMonthYear.value);
 };
 
 onMounted(loadChartData);
-watch(selectedView, loadChartData);
+watch([selectedView, selectedMonthYear], loadChartData);
 </script>
 
 <style scoped>
@@ -262,34 +211,84 @@ watch(selectedView, loadChartData);
   background-color: #fff;
   border-radius: 8px;
   padding: 16px;
+  height: 260px; /* Match Top Affiliates container height */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  height: 260px;
-  min-width: 280px;
 }
 
 .booking-trends__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .booking-trends__title {
   font-size: 15px;
-  margin: 0;
+  margin-bottom: 12px;
   color: #333;
+}
+
+
+.booking-trends__controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .booking-trends__select {
   font-size: 13px;
-  padding: 4px 8px;
+  padding: 6px 12px;
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  min-width: 100px;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%23333" d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
+}
+
+.booking-trends__select:focus {
+  outline: none;
+  border-color: #0984e3;
 }
 
 .booking-trends__chart {
   flex-grow: 1;
+  min-height: 180px;
+  max-height: 300px;
 }
+
+@media (max-width: 480px) {
+  .booking-trends__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .booking-trends__controls {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .booking-trends__select {
+    width: 100%;
+  }
+
+  /* Add this: Increase chart height on mobile */
+  .booking-trends__chart {
+    height: 180px; /* or more if needed */
+  }
+
+  /* Optional: reduce overall container height to prevent overflow */
+  .booking-trends {
+    height: auto;
+  }
+}
+
 </style>

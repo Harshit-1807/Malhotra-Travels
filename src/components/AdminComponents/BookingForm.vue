@@ -201,6 +201,7 @@ const onSubmit = async () => {
   validateMobile();
   if (mobileError.value) return;
   isLoading.value = true;
+  console.log("Emitting form data:", form.value);
   await emit("submit", { ...form.value });
   isLoading.value = false;
 };

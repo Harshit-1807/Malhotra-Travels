@@ -11,33 +11,44 @@ import { db } from "./firebaseConfig";
 
 const BOOKINGS_COLLECTION = "Bookings";
 
-/**
- * Save booking data to Firestore
- * @param {Object} bookingData - The booking data to save
- * @returns {Promise<void>}
- */
 export const saveBooking = async (bookingData) => {
   const bookingsCollection = collection(db, "Bookings");
-  await addDoc(bookingsCollection, {
+  const docRef = await addDoc(bookingsCollection, {
     ...bookingData,
-    createdAt: serverTimestamp(), // Add a timestamp for when the booking was created
+    date: bookingData.date, // Ensure date is a string
+    createdAt: serverTimestamp(),
   });
+  console.log("Saved document ID:", docRef.id);
+  return docRef.id; // Return the document ID
 };
 
 export const fetchBookings = async () => {
   const snapshot = await getDocs(collection(db, BOOKINGS_COLLECTION));
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-};
-
-export const addBooking = async (data) => {
-  return await addDoc(collection(db, BOOKINGS_COLLECTION), {
-    ...data,
-    createdAt: serverTimestamp(),
+  return snapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      ...data,
+      date: data.date?.toDate ? data.date.toDate().toISOString().split("T")[0] : data.date,
+      createdAt: data.createdAt?.toDate ? data.createdAt.toDate().toISOString() : data.createdAt,
+    };
   });
 };
 
+export const addBooking = async (data) => {
+  const docRef = await addDoc(collection(db, BOOKINGS_COLLECTION), {
+    ...data,
+    date: data.date,
+    createdAt: serverTimestamp(),
+  });
+  return docRef;
+};
+
 export const updateBooking = async (id, data) => {
-  return await updateDoc(doc(db, BOOKINGS_COLLECTION, id), data);
+  return await updateDoc(doc(db, BOOKINGS_COLLECTION, id), {
+    ...data,
+    date: data.date,
+  });
 };
 
 export const deleteBooking = async (id) => {
