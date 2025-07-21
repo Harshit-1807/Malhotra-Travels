@@ -58,6 +58,15 @@
           placeholder="e.g. yourname@example.com"
         />
 
+         <label for="amount" class="affiliate-modal__label">
+          Amount
+        </label>
+        <input
+          v-model="form.amount"
+          type="number"
+          class="affiliate-modal__input"
+        />
+
         <div class="affiliate-modal__actions">
           <button
             type="button"
@@ -103,6 +112,7 @@ const form = ref({
   name: "",
   mobile: "",
   email: "",
+  amount: "",
 });
 
 const isLoading = ref(false);
@@ -121,6 +131,7 @@ watch(
       name: val?.name || "",
       mobile: val?.mobile || "",
       email: val?.email || "",
+      amount: val?.amount || "",
     };
     validateMobile();
   },
