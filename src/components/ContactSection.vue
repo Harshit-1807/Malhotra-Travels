@@ -10,7 +10,7 @@
         </p>
         <p class="contact__info">
           📞 Phone:
-          <a href="tel:+917056476225" class="contact__link">7056476225</a>
+          <a href="tel:+917404207896" class="contact__link">7404207896</a>
           |
           <a href="tel:+917015487899" class="contact__link">7015487899</a>
         </p>
